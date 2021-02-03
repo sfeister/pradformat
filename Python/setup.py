@@ -46,7 +46,7 @@ setup(
     ],
 
     # What does your project relate to?
-    keywords='proton radiography', 'ion radiography', 'electron radiography',
+    keywords=['proton radiography', 'ion radiography', 'electron radiography',],
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().

@@ -1,5 +1,5 @@
 ############# Specific to this project ##############
-
+out/
 
 ############## PYTHON, standard gitignore ###################
 # Copied from https://github.com/github/gitignore

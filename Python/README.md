@@ -2,7 +2,7 @@
 
 **pradtools** is a set of cross-platform tools related to particle radiography. It especially leans on reading and writing from a set of common HDF5 formats for data at various stages along the real/synthetic particle radiography pipeline.
 
-This code was written by Scott Feister for broader use by the High Energy Density Physics Community.
+This  code was written by Scott Feister for broader use by the High Energy Density Physics Community.
 
 ## Setup
 
@@ -54,8 +54,6 @@ git clone https://github.com/phyzicist/pradtools.git
 cd pradtools/Python
 python setup.py install
 ```
-
-If you installed with the "--user" flag and "\~/.local/bin" is not on your system path, add it to your path (e.g. by appending the line "PATH=$PATH:$HOME/.local/bin" to "\~/.bashrc"). This will allow you to use any command-line tools from this repository (if any exist yet!).
 
 ## Usage
 You will need to read through the source code for descriptions of the functions of this package. There is unfortunately no formal documentation.
