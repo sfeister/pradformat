@@ -16,4 +16,6 @@ function obj = read_simple_fields(h5filename)
     obj.Bx = h5read(h5filename, '/Bx');
     obj.By = h5read(h5filename, '/By');
     obj.Bz = h5read(h5filename, '/Bz');
+    try obj.rho = h5read(h5filename, '/rho'); catch; end
+    try obj.rho_description = h5readatt(h5filename, '/', 'rho_description'); catch; end
 end

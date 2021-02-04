@@ -1,21 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-fields.py: Read and write the HDF5 pradtools "Fields" file structure
-
-A grid of E & M field values like Ex, Ey, Ez, Bx, By, Bz.
-
-This is a relatively simple file format. Perhaps more complicated file formats will be needed in the future.
+simple_fields.py: Read and write the HDF5 pradtools "Simple Fields" file structure
 
 Created by Scott Feister on Wed Feb  3 16:46:49 2021
 """
 
 import h5py
 
-class Fields(object):
+class SimpleFields(object):
     """
     Object for storing electric and magnetic field values on a uniform grid.
     """
+    OBJECT_TYPE = "fields"
+    FIELDS_TYPE = "simple"
+    
     def __init__(self):
         # Attributes.
         self.X = None
@@ -27,7 +26,9 @@ class Fields(object):
         self.Bx = None
         self.By = None
         self.Bz = None
-        self.units = "SI"
+        self.rho = None
+        self.pradtools_version = "0.0.0"
+        self.rho_description = None
 
     def write(self, f):
         """ Write the radiograph within an open HDF5 file object or filename string f"""
@@ -37,12 +38,12 @@ class Fields(object):
         else:
             filename = None
         
-        f.attrs["type"] = "fields"
-        f.attrs["pradtools_version"] = "0.0.0" # TODO: Pull this stamp dynamically
+        f.attrs["object_type"] = self.OBJECT_TYPE
+        f.attrs["fields_type"] = self.FIELDS_TYPE
+        f.attrs["pradtools_version"] = self.pradtools_version # TODO: Pull this stamp dynamically
         f.attrs["pradtools_language"] = "Python"
-        if not isinstance(self.units, type(None)):
-            f.attrs["units"] = self.units
-            f.attrs["units_description"] = "Units system used for all attribute values of this radiograph."
+        if not isinstance(self.rho_description, type(None)):
+            f.attrs["rho_description"] = self.rho_description
         if not isinstance(self.X, type(None)):
             f.create_dataset("X", data=self.X)
         if not isinstance(self.Y, type(None)):
@@ -61,6 +62,8 @@ class Fields(object):
             f.create_dataset("By", data=self.By)
         if not isinstance(self.Bz, type(None)):
             f.create_dataset("Bz", data=self.Bz)
+        if not isinstance(self.rho, type(None)):
+            f.create_dataset("rho", data=self.rho)
 
         if filename: # Close the file if it wasn't input as an open file handle
             f.close()

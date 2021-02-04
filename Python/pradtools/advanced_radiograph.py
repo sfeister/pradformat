@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-radiograph.py: Read and write the HDF5 pradtools "Radiograph" file structure
+advanced_radiograph.py: Read and write the HDF5 pradtools "Simple Radiograph" file structure
+
+WORK IN PROGRESS -- AKA DOES NOT WORK CURRENTLY
 
 Created by Scott Feister on Tue Feb  2 20:33:42 2021
 """
@@ -55,9 +57,9 @@ class Sensitivity(object):
         if not isinstance(self.sensitivity_units, type(None)):
             sens.attrs["sensitivity_units"] = self.sensitivity_units           
 
-class Radiograph(object):
+class AdvancedRadiograph(object):
     """
-    Object for storing data and attributes of a single particle-radiograph.
+    Object for storing data and attributes of a single radiograph created by multiple incident species and energies.
     """
     def __init__(self):
         # Attributes.

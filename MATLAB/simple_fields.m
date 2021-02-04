@@ -14,7 +14,9 @@ classdef simple_fields
         Bx
         By
         Bz
+        rho
         pradtools_version = "0.0.0"
+        rho_description
     end
     methods
         function prad_save(obj, h5filename)
@@ -61,6 +63,10 @@ classdef simple_fields
                 h5create(h5filename, '/Bz', size(obj.Bz))
                 h5write(h5filename, '/Bz', obj.Bz)
             end
+            if ~isempty(obj.rho)
+                h5create(h5filename, '/rho', size(obj.rho))
+                h5write(h5filename, '/rho', obj.rho)
+            end
             if ~isempty(obj.object_type)
                 h5writeatt(h5filename, '/', 'object_type', obj.object_type)
             end
@@ -69,6 +75,9 @@ classdef simple_fields
             end
             if ~isempty(obj.pradtools_version)
                 h5writeatt(h5filename, '/', 'pradtools_version', obj.pradtools_version)
+            end
+            if ~isempty(obj.rho_description)
+                h5writeatt(h5filename, '/', 'rho_description', obj.rho_description)
             end
         end
     end
