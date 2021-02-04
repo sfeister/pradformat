@@ -1,5 +1,7 @@
 ############# Specific to this project ##############
 out/
+outs/
+~*.xlsx
 
 ############## PYTHON, standard gitignore ###################
 # Copied from https://github.com/github/gitignore
