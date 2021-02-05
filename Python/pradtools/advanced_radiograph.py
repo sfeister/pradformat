@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-advanced_radiograph.py: Read and write the HDF5 pradtools "Simple Radiograph" file structure
+advanced_radiograph.py: Read and write the HDF5 pradtools "Advanced Radiograph" file structure
 
-WORK IN PROGRESS -- AKA DOES NOT WORK CURRENTLY
+WORK IN PROGRESS -- AKA DOES NOT WORK CURRENTLY OR CONFORM TO THE OFFICIAL SPEC
 
 Created by Scott Feister on Tue Feb  2 20:33:42 2021
 """

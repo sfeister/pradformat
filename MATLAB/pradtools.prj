@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.toolbox" plugin-version="1.0">
-  <configuration file="C:\Users\scott\Documents\SourceTree\pradtools\MATLAB\pradtools.prj" location="C:\Users\scott\Documents\SourceTree\pradtools\MATLAB" name="pradtools" target="target.toolbox" target-name="Package Toolbox">
+  <configuration build-checksum="1236878073" file="C:\Users\scott\Documents\SourceTree\pradtools\MATLAB\pradtools.prj" location="C:\Users\scott\Documents\SourceTree\pradtools\MATLAB" name="pradtools" target="target.toolbox" target-name="Package Toolbox">
     <param.appname>pradtools</param.appname>
     <param.authnamewatermark>Scott Feister</param.authnamewatermark>
     <param.email>scott.feister@csuci.edu</param.email>
@@ -37,7 +37,21 @@ out/
 outs/
 *.asv</param.exclude.filters>
     <param.exclude.pcodedmfiles>true</param.exclude.pcodedmfiles>
-    <param.examples />
+    <param.examples>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;examples&gt;
+   &lt;exampleCategory name="examples"&gt;
+      &lt;example name="example1_simple_radiograph" type="html"&gt;
+         &lt;file type="source"&gt;/examples/html/example1_simple_radiograph.html&lt;/file&gt;
+         &lt;file type="main"&gt;/examples/example1_simple_radiograph.m&lt;/file&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="example2_simple_fields" type="html"&gt;
+         &lt;file type="source"&gt;/examples/html/example2_simple_fields.html&lt;/file&gt;
+         &lt;file type="main"&gt;/examples/example2_simple_fields.m&lt;/file&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+&lt;/examples&gt;</param.examples>
     <param.demosxml />
     <param.apps />
     <param.registered.apps />
@@ -45,7 +59,7 @@ outs/
     <param.getting.started.guide />
     <param.matlabpath.excludes />
     <param.javaclasspath.excludes />
-    <param.exported.on.package>false</param.exported.on.package>
+    <param.exported.on.package>true</param.exported.on.package>
     <param.required.addons />
     <param.matlab.project.id />
     <param.matlab.project.name />
@@ -63,6 +77,8 @@ outs/
     <param.additional.sw.mac.url />
     <param.additional.sw.linux.url />
     <unset>
+      <param.authnamewatermark />
+      <param.email />
       <param.company />
       <param.output />
       <param.products.name />
@@ -70,7 +86,6 @@ outs/
       <param.products.version />
       <param.platforms />
       <param.exclude.pcodedmfiles />
-      <param.examples />
       <param.demosxml />
       <param.apps />
       <param.registered.apps />
@@ -78,7 +93,6 @@ outs/
       <param.getting.started.guide />
       <param.matlabpath.excludes />
       <param.javaclasspath.excludes />
-      <param.exported.on.package />
       <param.required.addons />
       <param.matlab.project.id />
       <param.matlab.project.name />
@@ -100,14 +114,10 @@ outs/
       <file>${PROJECT_ROOT}</file>
     </fileset.rootdir>
     <fileset.rootfiles>
-      <file>${PROJECT_ROOT}\example1_simple_radiograph.m</file>
-      <file>${PROJECT_ROOT}\example2_simple_fields.m</file>
-      <file>${PROJECT_ROOT}\read_prad.m</file>
-      <file>${PROJECT_ROOT}\read_simple_fields.m</file>
-      <file>${PROJECT_ROOT}\read_simple_radiograph.m</file>
+      <file>${PROJECT_ROOT}\demos.xml</file>
+      <file>${PROJECT_ROOT}\examples</file>
+      <file>${PROJECT_ROOT}\pradtools</file>
       <file>${PROJECT_ROOT}\README.md</file>
-      <file>${PROJECT_ROOT}\simple_fields.m</file>
-      <file>${PROJECT_ROOT}\simple_radiograph.m</file>
     </fileset.rootfiles>
     <fileset.depfun.included />
     <fileset.depfun.excluded />

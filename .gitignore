@@ -3,6 +3,10 @@ out/
 outs/
 ~*.xlsx
 
+# Matlab extra publishing stuff
+demos.xml
+html/
+
 ############## PYTHON, standard gitignore ###################
 # Copied from https://github.com/github/gitignore
 
