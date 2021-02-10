@@ -116,8 +116,12 @@ outs/
     <fileset.rootfiles>
       <file>${PROJECT_ROOT}\demos.xml</file>
       <file>${PROJECT_ROOT}\examples</file>
-      <file>${PROJECT_ROOT}\pradtools</file>
+      <file>${PROJECT_ROOT}\prad_load.m</file>
+      <file>${PROJECT_ROOT}\read_simple_fields.m</file>
+      <file>${PROJECT_ROOT}\read_simple_radiograph.m</file>
       <file>${PROJECT_ROOT}\README.md</file>
+      <file>${PROJECT_ROOT}\simple_fields.m</file>
+      <file>${PROJECT_ROOT}\simple_radiograph.m</file>
     </fileset.rootfiles>
     <fileset.depfun.included />
     <fileset.depfun.excluded />
