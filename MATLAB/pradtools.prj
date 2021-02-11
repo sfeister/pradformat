@@ -5,7 +5,7 @@
     <param.email>scott.feister@csuci.edu</param.email>
     <param.company>California State Univ. Channel Islands</param.company>
     <param.summary>Proton Radiography File Format Tools for High Energy Density Physics.</param.summary>
-    <param.description>See https://github.com/phyzicist/pradtools for up-to-date package and details.</param.description>
+    <param.description>See https://github.com/phyzicist/pradtools for up-to-date toolbox and documentation.</param.description>
     <param.screenshot>C:\Users\scott\Pictures\jets.PNG</param.screenshot>
     <param.version>0.0.0</param.version>
     <param.output>${PROJECT_ROOT}\pradtools.mltbx</param.output>
@@ -117,6 +117,7 @@ outs/
       <file>${PROJECT_ROOT}\demos.xml</file>
       <file>${PROJECT_ROOT}\examples</file>
       <file>${PROJECT_ROOT}\prad_load.m</file>
+      <file>${PROJECT_ROOT}\pradtools.mltbx.bak</file>
       <file>${PROJECT_ROOT}\read_simple_fields.m</file>
       <file>${PROJECT_ROOT}\read_simple_radiograph.m</file>
       <file>${PROJECT_ROOT}\README.md</file>

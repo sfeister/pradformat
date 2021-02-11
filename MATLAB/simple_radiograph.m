@@ -25,7 +25,7 @@ classdef simple_radiograph < matlab.mixin.SetGetExactNames & matlab.mixin.Custom
         file_date string
         raw_data_filename string       
     end
-    properties (Access = private)
+    properties (Constant)
         % Categorize the above public properties as required or optional
         req_ds = ["image"]; % Required datasets
         opt_ds = ["X", "Y", "T"]; % Optional datasets

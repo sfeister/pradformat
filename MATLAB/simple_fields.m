@@ -22,7 +22,7 @@ classdef simple_fields < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisp
         file_date string
         raw_data_filename string       
     end
-    properties (Access = private)
+    properties (Constant)
         % Categorize the above public properties as required or optional
         req_ds = ["X", "Y", "Z", "Ex", "Ey", "Ez", "Bx", "By", "Bz"]; % Required datasets
         opt_ds = ["rho"]; % Optional datasets
