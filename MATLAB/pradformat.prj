@@ -1,14 +1,14 @@
 <deployment-project plugin="plugin.toolbox" plugin-version="1.0">
-  <configuration build-checksum="1236878073" file="C:\Users\scott\Documents\SourceTree\pradtools\MATLAB\pradtools.prj" location="C:\Users\scott\Documents\SourceTree\pradtools\MATLAB" name="pradtools" target="target.toolbox" target-name="Package Toolbox">
-    <param.appname>pradtools</param.appname>
+  <configuration build-checksum="1236878073" file="C:\Users\scott\Documents\SourceTree\pradformat\MATLAB\pradformat.prj" location="C:\Users\scott\Documents\SourceTree\pradformat\MATLAB" name="pradformat" target="target.toolbox" target-name="Package Toolbox">
+    <param.appname>pradformat</param.appname>
     <param.authnamewatermark>Scott Feister</param.authnamewatermark>
     <param.email>scott.feister@csuci.edu</param.email>
     <param.company>California State Univ. Channel Islands</param.company>
     <param.summary>Proton Radiography File Format Tools for High Energy Density Physics.</param.summary>
-    <param.description>See https://github.com/phyzicist/pradtools for up-to-date toolbox and documentation.</param.description>
+    <param.description>See https://github.com/phyzicist/pradformat for up-to-date toolbox and documentation.</param.description>
     <param.screenshot>C:\Users\scott\Pictures\jets.PNG</param.screenshot>
     <param.version>0.0.0</param.version>
-    <param.output>${PROJECT_ROOT}\pradtools.mltbx</param.output>
+    <param.output>${PROJECT_ROOT}\pradformat.mltbx</param.output>
     <param.products.name />
     <param.products.id />
     <param.products.version />
@@ -37,21 +37,7 @@ out/
 outs/
 *.asv</param.exclude.filters>
     <param.exclude.pcodedmfiles>true</param.exclude.pcodedmfiles>
-    <param.examples>&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;examples&gt;
-   &lt;exampleCategory name="examples"&gt;
-      &lt;example name="example1_simple_radiograph" type="html"&gt;
-         &lt;file type="source"&gt;/examples/html/example1_simple_radiograph.html&lt;/file&gt;
-         &lt;file type="main"&gt;/examples/example1_simple_radiograph.m&lt;/file&gt;
-         &lt;file type="thumbnail"/&gt;
-      &lt;/example&gt;
-      &lt;example name="example2_simple_fields" type="html"&gt;
-         &lt;file type="source"&gt;/examples/html/example2_simple_fields.html&lt;/file&gt;
-         &lt;file type="main"&gt;/examples/example2_simple_fields.m&lt;/file&gt;
-         &lt;file type="thumbnail"/&gt;
-      &lt;/example&gt;
-   &lt;/exampleCategory&gt;
-&lt;/examples&gt;</param.examples>
+    <param.examples />
     <param.demosxml />
     <param.apps />
     <param.registered.apps />
@@ -86,6 +72,7 @@ outs/
       <param.products.version />
       <param.platforms />
       <param.exclude.pcodedmfiles />
+      <param.examples />
       <param.demosxml />
       <param.apps />
       <param.registered.apps />
@@ -114,10 +101,8 @@ outs/
       <file>${PROJECT_ROOT}</file>
     </fileset.rootdir>
     <fileset.rootfiles>
-      <file>${PROJECT_ROOT}\demos.xml</file>
       <file>${PROJECT_ROOT}\examples</file>
       <file>${PROJECT_ROOT}\prad_load.m</file>
-      <file>${PROJECT_ROOT}\pradtools.mltbx.bak</file>
       <file>${PROJECT_ROOT}\read_simple_fields.m</file>
       <file>${PROJECT_ROOT}\read_simple_radiograph.m</file>
       <file>${PROJECT_ROOT}\README.md</file>
@@ -128,7 +113,7 @@ outs/
     <fileset.depfun.excluded />
     <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}" name="pradtools.mltbx" optional="false">C:\Users\scott\Documents\SourceTree\pradtools\MATLAB\pradtools.mltbx</file>
+      <file location="${PROJECT_ROOT}" name="pradformat.mltbx" optional="false">C:\Users\scott\Documents\SourceTree\pradformat\MATLAB\pradformat.mltbx</file>
     </build-deliverables>
     <workflow />
     <matlab>

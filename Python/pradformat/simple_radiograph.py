@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-advanced_radiograph.py: Read and write the HDF5 pradtools "Simple Radiograph" file structure
+advanced_radiograph.py: Read and write the HDF5 pradformat "Simple Radiograph" file structure
 
 Created by Scott Feister on Tue Feb  2 20:33:42 2021
 """
@@ -22,7 +22,7 @@ class SimpleRadiograph(object):
         self.Y = None
         self.Z = None
         
-        self.pradtools_version = "0.0.0" # TODO: Pull this stamp dynamically
+        self.pradformat_version = "0.0.0" # TODO: Pull this stamp dynamically
         self.pixel_width = None
         self.scale_factor = None
         self.source_distance = None
@@ -49,8 +49,8 @@ class SimpleRadiograph(object):
             # Attributes
             f.attrs["object_type"] = self.OBJECT_TYPE
             f.attrs["radiograph_type"] = self.RADIOGRAPH_TYPE
-            f.attrs["pradtools_version"] = self.pradtools_version
-            f.attrs["pradtools_language"] = "Python"
+            f.attrs["pradformat_version"] = self.pradformat_version
+            f.attrs["pradformat_language"] = "Python"
             if not isinstance(self.pixel_width, type(None)):
                 f.attrs["pixel_width"] = self.pixel_width
             if not isinstance(self.scale_factor, type(None)):
@@ -83,7 +83,7 @@ class SimpleRadiograph(object):
                 self.Z = f["Z"][:]
             #TODO: Finish all this jazz
 
-            self.pradtools_version = f.attrs["pradtools_version"]
+            self.pradformat_version = f.attrs["pradformat_version"]
             self.pixel_width = f.attrs["pixel_width"]
             self.scale_factor = f.attrs["scale_factor"]
             if "source_distance" in f.attrs.keys():

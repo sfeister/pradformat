@@ -1,5 +1,5 @@
 % example1_simple_radiograph.m Read and write the simple radiograph format for
-% HDF5 pradtools
+% HDF5 pradformat
 
 % Example 100x300 CR39 radiograph for 14.7 MeV protons
 

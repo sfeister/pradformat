@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-simple_fields.py: Read and write the HDF5 pradtools "Simple Fields" file structure
+simple_fields.py: Read and write the HDF5 pradformat "Simple Fields" file structure
 
 Created by Scott Feister on Wed Feb  3 16:46:49 2021
 """
@@ -27,7 +27,7 @@ class SimpleFields(object):
         self.By = None
         self.Bz = None
         self.rho = None
-        self.pradtools_version = "0.0.0"
+        self.pradformat_version = "0.0.0"
         self.rho_description = None
 
     def write(self, f):
@@ -40,8 +40,8 @@ class SimpleFields(object):
         
         f.attrs["object_type"] = self.OBJECT_TYPE
         f.attrs["fields_type"] = self.FIELDS_TYPE
-        f.attrs["pradtools_version"] = self.pradtools_version # TODO: Pull this stamp dynamically
-        f.attrs["pradtools_language"] = "Python"
+        f.attrs["pradformat_version"] = self.pradformat_version # TODO: Pull this stamp dynamically
+        f.attrs["pradformat_language"] = "Python"
         if not isinstance(self.rho_description, type(None)):
             f.attrs["rho_description"] = self.rho_description
         if not isinstance(self.X, type(None)):

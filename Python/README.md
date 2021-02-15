@@ -1,6 +1,6 @@
-# pradtools (Particle Radiography Tools) - Python Package
+# pradformat (Particle Radiography File Format Tools) - Python Package
 
-**pradtools** is a set of cross-platform tools related to particle radiography. It especially leans on reading and writing from a set of common HDF5 formats for data at various stages along the real/synthetic particle radiography pipeline.
+**pradformat** is a set of cross-platform tools related to particle radiography. It especially leans on reading and writing from a set of common HDF5 formats for data at various stages along the real/synthetic particle radiography pipeline.
 
 This  code was written by Scott Feister for broader use by the High Energy Density Physics Community.
 
@@ -36,22 +36,22 @@ conda install numpy scipy matplotlib h5py
 ```
 
 ### Installation
-After installing the required packages, we may install **pradtools**.
+After installing the required packages, we may install **pradformat**.
 
-One way to install **pradtools** is via
+One way to install **pradformat** is via
 ```bash
-pip install "git+https://github.com/phyzicist/pradtools.git#egg=pkg&subdirectory=Python"
+pip install "git+https://github.com/phyzicist/pradformat.git#egg=pkg&subdirectory=Python"
 ```
 
-To update **pradtools** at a later date
+To update **pradformat** at a later date
 ```bash
-pip install --upgrade "git+https://github.com/phyzicist/pradtools.git#egg=pkg&subdirectory=Python"
+pip install --upgrade "git+https://github.com/phyzicist/pradformat.git#egg=pkg&subdirectory=Python"
 ```
 
-An alternative way to install **pradtools** is via
+An alternative way to install **pradformat** is via
 ```bash
-git clone https://github.com/phyzicist/pradtools.git
-cd pradtools/Python
+git clone https://github.com/phyzicist/pradformat.git
+cd pradformat/Python
 python setup.py install
 ```
 
@@ -60,12 +60,12 @@ You will need to read through the source code for descriptions of the functions 
 
 ### General usage
 ```python
-import pradtools as pr
+import pradformat as pr
 ```
 
 ## Uninstalling
 
-To uninstall **pradtools**
+To uninstall **pradformat**
 ```shell
-pip uninstall pradtools
+pip uninstall pradformat
 ```

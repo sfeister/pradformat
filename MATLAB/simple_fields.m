@@ -15,7 +15,7 @@ classdef simple_fields < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisp
         By (:,:,:) {mustBeNumeric}
         Bz (:,:,:) {mustBeNumeric}
         rho (:,:,:) {mustBeNumeric}
-        pradtools_version string = "0.0.0"
+        pradformat_version string = "0.0.0"
         rho_description string
         label string
         description string
@@ -29,7 +29,7 @@ classdef simple_fields < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisp
         req_atts = [...  % Required attributes
             "object_type", ...
             "fields_type", ...
-            "pradtools_version", ...
+            "pradformat_version", ...
             ];
         opt_atts = [...  % Optional attributes
             "rho_description", ...

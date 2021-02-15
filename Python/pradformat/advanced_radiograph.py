@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-advanced_radiograph.py: Read and write the HDF5 pradtools "Advanced Radiograph" file structure
+advanced_radiograph.py: Read and write the HDF5 pradformat "Advanced Radiograph" file structure
 
 WORK IN PROGRESS -- AKA DOES NOT WORK CURRENTLY OR CONFORM TO THE OFFICIAL SPEC
 
@@ -87,8 +87,8 @@ class AdvancedRadiograph(object):
         
         rad = f.create_group(grp_name) # TODO: Iterate on layer1, layer2, layer3, ...
         rad.attrs["type"] = "radiograph"
-        rad.attrs["pradtools_version"] = "0.0.0" # TODO: Pull this stamp dynamically
-        rad.attrs["pradtools_language"] = "Python"
+        rad.attrs["pradformat_version"] = "0.0.0" # TODO: Pull this stamp dynamically
+        rad.attrs["pradformat_language"] = "Python"
         if not isinstance(self.layer_name, type(None)):
             rad.attrs["layer_name"] = self.layer_name
         if not isinstance(self.image, type(None)):

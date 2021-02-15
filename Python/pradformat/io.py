@@ -11,7 +11,7 @@ from .simple_radiograph import SimpleRadiograph
 from .simple_fields import SimpleFields
 
 def prad_load(h5filename):
-    """ General reader for pradtools HDF5 file formats"""
+    """ General reader for pradformat HDF5 file formats"""
     obj = None
     with h5py.File(h5filename, "r") as f:
         object_type = f.attrs["object_type"]

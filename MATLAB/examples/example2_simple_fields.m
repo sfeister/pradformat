@@ -1,5 +1,5 @@
 % example2_simple_fields.m Write and read the simple fields format for
-% HDF5 pradtools
+% HDF5 pradformat
 
 % Example 100 x 300 x 400 spatial grid
 % Covering the XYZ spatial coordinate ranges (-5.0, 5.0) meters, (-15.0, 15.0) meters,

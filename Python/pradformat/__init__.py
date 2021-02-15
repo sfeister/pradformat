@@ -1,4 +1,4 @@
-""" Proton Radiography Tools for HEDP (Python) """
+""" Proton Radiography File Format Tools for HEDP (Python) """
 
 from .simple_radiograph import SimpleRadiograph
 from .simple_fields import SimpleFields

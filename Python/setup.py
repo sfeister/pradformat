@@ -9,14 +9,14 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='pradtools',
+    name='pradformat',
     version='0.0.1a0',
 
-    description="Proton Radiography Tools for HEDP",
+    description="Proton Radiography Format Tools for HEDP",
     long_description=long_description,
 
     # The project's main homepage.
-    url='https://github.com/phyzicist/pradtools',
+    url='https://github.com/phyzicist/pradformat',
 
     # Author details
     author='Scott Feister',

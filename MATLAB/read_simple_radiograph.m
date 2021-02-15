@@ -3,19 +3,19 @@ function obj = read_simple_radiograph(h5filename)
     obj = simple_radiograph;
 
     % Check that the filetype matches and that we're using an up-to-date
-    % pradtools reader toolbox (or move on if version comparison fails).
+    % pradformat reader toolbox (or move on if version comparison fails).
     object_type = h5readatt(h5filename, '/', 'object_type');
     assert(strcmp(object_type, obj.object_type));
     radiograph_type = h5readatt(h5filename, '/', 'radiograph_type');
     assert(strcmp(radiograph_type, obj.radiograph_type));
 
-    pradtools_version = h5readatt(h5filename, '/', 'pradtools_version');
+    pradformat_version = h5readatt(h5filename, '/', 'pradformat_version');
     try
-        if verLessThan('pradtools', pradtools_version)
-            warning('Your MATLAB pradtools toolbox is out of date. This file was generated with a more recent version. Please download the latest pradtools toolbox by visiting "https://github.com/phyzicist/pradtools".')
+        if verLessThan('pradformat', pradformat_version)
+            warning('Your MATLAB pradformat toolbox is out of date. This file was generated with a more recent version. Please download the latest pradformat toolbox by visiting "https://github.com/phyzicist/pradformat".')
         end
     catch
-        warning("Failed to identify whether your pradtools toolbox version is up-to-date with the file format version you're reading. Proceed with caution!")
+        warning("Failed to identify whether your pradformat toolbox version is up-to-date with the file format version you're reading. Proceed with caution!")
     end
 
     % Read in required datasets
