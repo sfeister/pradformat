@@ -11,8 +11,8 @@ function obj = read_simple_fields(h5filename)
 
     pradformat_version = h5readatt(h5filename, '/', 'pradformat_version');
     try
-        if verLessThan('pradformat', pradformat_version)
-            warning('Your MATLAB pradformat toolbox is out of date. This file was generated with a more recent version. Please download the latest pradformat toolbox by visiting "https://github.com/phyzicist/pradformat".')
+        if verparse(pradformat_version) > verparse(obj.pradformat_version)
+            warning(['Your MATLAB pradformat toolbox is out of date. The file you are about to load was generated with version ' char(pradformat_version) ', but your toolbox version is only ' char(obj.pradformat_version) '. For best compatibility, download the latest pradformat toolbox by visiting "https://github.com/phyzicist/pradformat".'])
         end
     catch
         warning("Failed to identify whether your pradformat toolbox version is up-to-date with the file format version you're reading. Proceed with caution!")

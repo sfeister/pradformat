@@ -10,9 +10,9 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='pradformat',
-    version='0.0.1a0',
+    version='0.1.0',
 
-    description="Proton Radiography Format Tools for HEDP",
+    description="Proton Radiography File Format Tools for HEDP",
     long_description=long_description,
 
     # The project's main homepage.
@@ -50,7 +50,7 @@ setup(
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    packages=find_packages(exclude=['contrib', 'docs', 'tests']),
+    packages=find_packages(exclude=['contrib', 'docs', 'tests', 'examples']),
 
     # List run-time dependencies here.  These will be installed by pip when
     # your project is installed. For an analysis of "install_requires" vs pip's

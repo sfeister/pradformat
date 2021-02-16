@@ -12,8 +12,8 @@ class SimpleRadiograph(object):
     """
     Object for storing data and attributes of a single radiograph created by single species at a single energy.
     """
-    OBJECT_TYPE = "radiograph"
-    RADIOGRAPH_TYPE = "simple"
+    object_type = "radiograph"
+    radiograph_type = "simple"
 
     def __init__(self):
         # Attributes.
@@ -22,7 +22,7 @@ class SimpleRadiograph(object):
         self.Y = None
         self.Z = None
         
-        self.pradformat_version = "0.0.0" # TODO: Pull this stamp dynamically
+        self.pradformat_version = PRADFORMAT_VERSION
         self.pixel_width = None
         self.scale_factor = None
         self.source_distance = None

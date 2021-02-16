@@ -87,7 +87,7 @@ class AdvancedRadiograph(object):
         
         rad = f.create_group(grp_name) # TODO: Iterate on layer1, layer2, layer3, ...
         rad.attrs["type"] = "radiograph"
-        rad.attrs["pradformat_version"] = "0.0.0" # TODO: Pull this stamp dynamically
+        rad.attrs["pradformat_version"] = PRADFORMAT_VERSION
         rad.attrs["pradformat_language"] = "Python"
         if not isinstance(self.layer_name, type(None)):
             rad.attrs["layer_name"] = self.layer_name

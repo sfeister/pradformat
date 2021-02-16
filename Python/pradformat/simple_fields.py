@@ -7,16 +7,34 @@ Created by Scott Feister on Wed Feb  3 16:46:49 2021
 """
 
 import h5py
+from .__version__ import __version__
+
+PRADFORMAT_VERSION = __version__ # awkward work-around to get __version__ variable into class
 
 class SimpleFields(object):
     """
     Object for storing electric and magnetic field values on a uniform grid.
     """
-    OBJECT_TYPE = "fields"
-    FIELDS_TYPE = "simple"
+    object_type = "fields"
+    fields_type = "simple"
     
+    # Categorize the above/below public properties as required or optional
+    __req_ds = ["X", "Y", "Z", "Ex", "Ey", "Ez", "Bx", "By", "Bz"] # Required datasets
+    __opt_ds = ["rho"] # Optional datasets
+    __req_atts = [  # Required attributes
+        "object_type", 
+        "fields_type", 
+        "pradformat_version", 
+        ]
+    __opt_atts = [  # Optional attributes
+        "rho_description", 
+        "label", 
+        "description", 
+        "file_date", 
+        "raw_data_filename", 
+        ]
+        
     def __init__(self):
-        # Attributes.
         self.X = None
         self.Y = None
         self.Z = None
@@ -27,46 +45,47 @@ class SimpleFields(object):
         self.By = None
         self.Bz = None
         self.rho = None
-        self.pradformat_version = "0.0.0"
+        self.pradformat_version = PRADFORMAT_VERSION
         self.rho_description = None
+        self.label = None
+        self.description = None
+        self.file_date = None
+        self.raw_data_filename = None
 
-    def write(self, f):
-        """ Write the radiograph within an open HDF5 file object or filename string f"""
-        if isinstance(f, str): # if f is not an open file handle
-            filename = f
-            f = h5py.File(filename, "w") # Overwrites if file already exists!
-        else:
-            filename = None
+    def validate(self):
+        # Validate that all required properties have been set.
+        # If some are not, throw an error.
+        for ds in self.__req_ds:
+            if isinstance(getattr(self, ds), type(None)):
+                raise Exception('Please assign a value to all required properties.\n The following required dataset property is not yet assigned: {0}.\n Assign a value via "object.{0} = value" and try again.'.format(ds))
+        for att in self.__req_atts:
+            if isinstance(getattr(self, att), type(None)):
+                raise Exception('Please assign a value to all required properties.\n The following required attribute property is not yet assigned: {0}.\n Assign a value via "object.{0} = value" and try again.'.format(att))
+        return
+
+    def save(self, filename):
+        """ Saves SimpleFields object to HDF5 file"""
+        self.validate() # Before opening a new HDF5 file, check that all required properties are set
         
-        f.attrs["object_type"] = self.OBJECT_TYPE
-        f.attrs["fields_type"] = self.FIELDS_TYPE
-        f.attrs["pradformat_version"] = self.pradformat_version # TODO: Pull this stamp dynamically
-        f.attrs["pradformat_language"] = "Python"
-        if not isinstance(self.rho_description, type(None)):
-            f.attrs["rho_description"] = self.rho_description
-        if not isinstance(self.X, type(None)):
-            f.create_dataset("X", data=self.X)
-        if not isinstance(self.Y, type(None)):
-            f.create_dataset("Y", data=self.Y)
-        if not isinstance(self.Z, type(None)):
-            f.create_dataset("Z", data=self.Z)
-        if not isinstance(self.Ex, type(None)):
-            f.create_dataset("Ex", data=self.Ex)
-        if not isinstance(self.Ey, type(None)):
-            f.create_dataset("Ey", data=self.Ey)
-        if not isinstance(self.Ez, type(None)):
-            f.create_dataset("Ez", data=self.Ez)
-        if not isinstance(self.Bx, type(None)):
-            f.create_dataset("Bx", data=self.Bx)
-        if not isinstance(self.By, type(None)):
-            f.create_dataset("By", data=self.By)
-        if not isinstance(self.Bz, type(None)):
-            f.create_dataset("Bz", data=self.Bz)
-        if not isinstance(self.rho, type(None)):
-            f.create_dataset("rho", data=self.rho)
-
-        if filename: # Close the file if it wasn't input as an open file handle
-            f.close()
+        # Create file, overwriting if file already exists
+        with h5py.File(filename, "w") as f: 
+            # Write required datasets to file
+            for ds in self.__req_ds:
+                f.create_dataset(ds, data=getattr(self, ds))
+                
+            # Write optional datasets to file
+            for ds in self.__opt_ds:
+                if not isinstance(getattr(self, ds), type(None)): 
+                    f.create_dataset(ds, data=getattr(self, ds))
+                
+            # Write required datasets to file
+            for att in self.__req_atts:
+                f.attrs[att] = getattr(self, att)
+                
+            # Write optional datasets to file
+            for att in self.__opt_atts:
+                if not isinstance(getattr(self, att), type(None)): 
+                    f.attrs[att] = getattr(self, att)
 
 if __name__ == "__main__":
     pass

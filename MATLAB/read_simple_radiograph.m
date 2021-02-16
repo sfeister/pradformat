@@ -11,6 +11,9 @@ function obj = read_simple_radiograph(h5filename)
 
     pradformat_version = h5readatt(h5filename, '/', 'pradformat_version');
     try
+        ver_file = strsplit(pradformat_version, '.');
+        ver_tbox = strsplit(obj.pradformat_version, '.');
+        if ver_tbox{0}
         if verLessThan('pradformat', pradformat_version)
             warning('Your MATLAB pradformat toolbox is out of date. This file was generated with a more recent version. Please download the latest pradformat toolbox by visiting "https://github.com/phyzicist/pradformat".')
         end

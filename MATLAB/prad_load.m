@@ -9,7 +9,7 @@ function obj = prad_load(h5filename)
         error("Error. \nFailure to read the required 'object_type' attribute. See pradformat format specifications for details.")
     end
     
-    switch object_type
+    switch char(object_type)
         case 'radiograph'
             try
                 radiograph_type = h5readatt(h5filename, '/', 'radiograph_type');
@@ -28,7 +28,7 @@ function obj = prad_load(h5filename)
             catch
                 error("Error. \nFailure to read the required 'fields_type' attribute. See pradformat format specifications for details.")
             end
-            switch fields_type
+            switch char(fields_type)
                 case "simple"
                     obj = read_simple_fields(h5filename);
                 otherwise
