@@ -3,8 +3,6 @@
 """
 advanced_radiograph.py: Read and write the HDF5 pradformat "Advanced Radiograph" file structure
 
-WORK IN PROGRESS -- AKA DOES NOT WORK CURRENTLY OR CONFORM TO THE OFFICIAL SPEC
-
 Created by Scott Feister on Tue Feb  2 20:33:42 2021
 """
 
@@ -236,14 +234,15 @@ class AdvancedRadiograph(object):
                 if att in f.attrs.keys(): 
                     setattr(self, att, f.attrs[att])
             
-            # TODO: Read in the sensitivities
+            # Count the number of sensitivity groups (starting at 1 and counting up)
             i = 0
             while "sensitivity" + str(i + 1) in f.keys(): # e.g. sensitivity1, sensitivity2, ... (zero-indexed)
                 i++
-            nsens = i # Number of sensitivites in this file
+            nsens = i # Number of sensitivities in this file
             
+            # Read in the sensitivity groups
             if nsens > 0:
-                self.sensitivities = [None]*nsens
+                self.sensitivities = [None]*nsens # create an empty list of length nsens
                 for i in range(nsens):
                     h5group = f["/sensitivity" + str(i + 1)]
                     self.sensitivities[i] = Sensitivity(h5group)

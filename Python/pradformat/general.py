@@ -20,6 +20,8 @@ def prad_load(h5filename):
             radiograph_type =  f.attrs["radiograph_type"]
             if radiograph_type == "simple":
                 return SimpleRadiograph(h5filename)
+            elif radiograph_type == "advanced":
+                return AdvancedRadiograph(h5filename)
             else:
                 raise Exception("Bad radiograph_type.")
         elif object_type == "fields":
