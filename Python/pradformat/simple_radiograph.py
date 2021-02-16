@@ -7,6 +7,8 @@ Created by Scott Feister on Tue Feb  2 20:33:42 2021
 """
 
 import h5py
+import numpy as np
+from datetime import datetime
 from .__version__ import __version__
 
 PRADFORMAT_VERSION = __version__ # awkward work-around to get __version__ variable into class
@@ -62,7 +64,7 @@ class SimpleRadiograph(object):
         self.label = None
         self.description = None
         self.experiment_date = None
-        self.file_date = None
+        self.file_date = datetime.now().strftime("%Y-%m-%d")
         self.raw_data_filename = None
 
         if not isinstance(h5filename, type(None)):
@@ -88,16 +90,16 @@ class SimpleRadiograph(object):
             # Write required datasets to file
             for ds in self.__req_ds:
                 data = getattr(self, ds)
-                if hasattr(data, '__len__') and len(data) > 1:
-                    f.create_dataset(ds, data=data, compression="gzip", compression_opts=compression_opts) # Compress only for datasets of length greater than one
+                if not np.isscalar(data):
+                    f.create_dataset(ds, data=data, compression="gzip", compression_opts=compression_opts)
                 else:
-                    f.create_dataset(ds, data=data)
+                    f.create_dataset(ds, data=data) # Don't compress scalar datasets (e.g. single-element arrays)
                     
             # Write optional datasets to file
             for ds in self.__opt_ds:
                 data = getattr(self, ds)
                 if not isinstance(data, type(None)):
-                    if hasattr(data, '__len__') and len(data) > 1:
+                    if not np.isscalar(data):
                         f.create_dataset(ds, data=data, compression="gzip", compression_opts=compression_opts) # Compress only for datasets of length greater than one
                     else:
                         f.create_dataset(ds, data=data)

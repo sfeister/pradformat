@@ -56,11 +56,11 @@ python setup.py install
 ```
 
 ## Usage
-You will need to read through the source code for descriptions of the functions of this package. There is unfortunately no formal documentation.
+Refer to the pradformat FormatSpec document for details on the HDF5 formats that can be read/written. Also, see the examples folder for a few Python usage examples. 
 
 ### General usage
 ```python
-import pradformat as pr
+import pradformat as prf
 ```
 
 ## Uninstalling
