@@ -10,6 +10,7 @@ import h5py
 from .simple_radiograph import SimpleRadiograph
 from .simple_fields import SimpleFields
 from .particles_list import ParticlesList
+from .advanced_radiograph import AdvancedRadiograph
 
 def prad_load(h5filename):
     """ General reader for pradformat HDF5 file formats"""

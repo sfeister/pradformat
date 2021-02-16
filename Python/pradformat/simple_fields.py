@@ -8,6 +8,7 @@ Created by Scott Feister on Wed Feb  3 16:46:49 2021
 
 import h5py
 import numpy as np
+from datetime import datetime
 from .__version__ import __version__
 
 PRADFORMAT_VERSION = __version__ # awkward work-around to get __version__ variable into class

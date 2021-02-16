@@ -8,6 +8,7 @@ Created by Scott Feister on Tue Feb  2 20:33:42 2021
 
 import h5py
 import numpy as np
+from datetime import datetime
 from .__version__ import __version__
 
 PRADFORMAT_VERSION = __version__ # awkward work-around to get __version__ variable into class
@@ -16,7 +17,7 @@ class Sensitivity(object):
     group_type = "sensitivity"
 
     # Categorize the above/below public properties (but not groups) as required or optional
-    __req_ds = ["scale_factors", "energies"] # Required datasets
+    __req_ds = ["energies", "scale_factors"] # Required datasets
     __opt_ds = ["prescale_factors", "source_flux"] # Optional datasets
     __req_atts = [  # Required attributes
         "group_type", 
@@ -28,8 +29,8 @@ class Sensitivity(object):
 
     def __init__(self, h5group=None):
         # h5group is an open handle to an already-created HDF5 group
-        self.scale_factors = None
         self.energies = None
+        self.scale_factors = None
         self.prescale_factors = None
         self.source_flux = None
         
@@ -48,10 +49,10 @@ class Sensitivity(object):
                 raise Exception('Please assign a value to all required properties.\n The following required sensitivity dataset property is not yet assigned in at least one sensitivity: {0}.\n Assign a value via "object.sensitivities[x].{0} = value" and try again.'.format(ds))
         for att in self.__req_atts:
             if isinstance(getattr(self, att), type(None)):
-                raise Exception('Please assign a value to all required properties.\n The following required sensitivity attribute property is not yet assigned in at least one sensitivity: {0}.\n Assign a value via "object.sensitivies[x].{0} = value" and try again.'.format(att))
+                raise Exception('Please assign a value to all required properties.\n The following required sensitivity attribute property is not yet assigned in at least one sensitivity: {0}.\n Assign a value via "object.sensitivities[x].{0} = value" and try again.'.format(att))
         return
 
-    def save(self, h5group):
+    def save(self, h5group, compression_opts=4):
         """ Saves Sensitivity object into an already-existing HDF5 group handle"""
         self.validate() # Before writing into this group, check that all required properties are set
         
@@ -60,16 +61,16 @@ class Sensitivity(object):
         # Write required datasets to file within this group
         for ds in self.__req_ds:
             data = getattr(self, ds)
-            if hasattr(data, '__len__') and len(data) > 1:
-                f.create_dataset(ds, data=data, compression="gzip", compression_opts=compression_opts) # Compress only for datasets of length greater than one
+            if not np.isscalar(data):
+                f.create_dataset(ds, data=data, compression="gzip", compression_opts=compression_opts)
             else:
-                f.create_dataset(ds, data=data)
+                f.create_dataset(ds, data=data) # Don't compress scalar datasets (e.g. single-element arrays)
                 
         # Write optional datasets to file within this group
         for ds in self.__opt_ds:
             data = getattr(self, ds)
             if not isinstance(data, type(None)):
-                if hasattr(data, '__len__') and len(data) > 1:
+                if not np.isscalar(data):
                     f.create_dataset(ds, data=data, compression="gzip", compression_opts=compression_opts) # Compress only for datasets of length greater than one
                 else:
                     f.create_dataset(ds, data=data)
@@ -90,12 +91,12 @@ class Sensitivity(object):
         
         # Read in required datasets
         for ds in self.__req_ds:
-            setattr(self, ds, f["/" + ds][()])
+            setattr(self, ds, f[ds][()])
             
         # Read in optional datasets
         for ds in self.__opt_ds:
             if ds in f.keys():
-                setattr(self, ds, f["/" + ds][()])
+                setattr(self, ds, f[ds][()])
             
         # Read in required attributes
         for att in self.__req_atts:
@@ -134,7 +135,7 @@ class AdvancedRadiograph(object):
         "raw_data_filename", 
         ]
 
-    def __init__(self):
+    def __init__(self, h5filename=None):
         self.image = None
         self.X = None
         self.Y = None
@@ -174,12 +175,12 @@ class AdvancedRadiograph(object):
         
         return
 
-    def save(self, filename, compression_opts=4):
+    def save(self, h5filename, compression_opts=4):
         """ Saves AdvancedRadiography object to HDF5 file"""
         self.validate() # Before opening a new HDF5 file, check that all required properties are set
         
         # Create file, overwriting if file already exists
-        with h5py.File(filename, "w") as f: 
+        with h5py.File(h5filename, "w") as f: 
             # Write required datasets to file
             for ds in self.__req_ds:
                 data = getattr(self, ds)
@@ -238,7 +239,7 @@ class AdvancedRadiograph(object):
             # Count the number of sensitivity groups (starting at 1 and counting up)
             i = 0
             while "sensitivity" + str(i + 1) in f.keys(): # e.g. sensitivity1, sensitivity2, ... (zero-indexed)
-                i++
+                i+=1
             nsens = i # Number of sensitivities in this file
             
             # Read in the sensitivity groups

@@ -44,7 +44,7 @@ if __name__ == "__main__":
     plist.pz = pmag * np.cos(ptheta)
     
     # Define additional particle attributes
-    plist.charge = sc.e
+    plist.charge = -sc.e
     plist.mass = sc.m_e
     plist.spec_name = "e-"
     plist.id = np.arange(N)
