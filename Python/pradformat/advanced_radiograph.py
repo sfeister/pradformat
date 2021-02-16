@@ -9,127 +9,244 @@ Created by Scott Feister on Tue Feb  2 20:33:42 2021
 """
 
 import h5py
+from .__version__ import __version__
 
-class Species(object):
-    """
-    Object for storing data about a single particle species.
-    """
-    def __init__(self, name=None, mass=None, charge=None):
-        # Attributes.
-        self.name = name # Shortname for the particle, e.g. "proton"
-        self.mass = mass # Species mass per particle
-        self.charge = charge # Species charge per particle
-        self.units = "SI"
-
-    def write(self, f, grp_name="species1"):
-        spec = f.create_group(grp_name) # TODO: Iterate on species1, species2, species3, ...
-        
-        spec.attrs["units"] = self.units
-        if not isinstance(self.name, type(None)):
-            spec.attrs["name"] = self.name
-        if not isinstance(self.mass, type(None)):
-            spec.attrs["mass"] = self.mass
-        if not isinstance(self.charge, type(None)):
-            spec.attrs["charge"] = self.charge
+PRADFORMAT_VERSION = __version__ # awkward work-around to get __version__ variable into class
 
 class Sensitivity(object):
-    """
-    Object for storing data about image signal response to incident particles.
-    """
-    def __init__(self, species=None, energy=None, sensitivity=None):
-        self.species = species # Should be a single species object
-        self.energy = energy # Array of energies at which sensitivity is quantified
-        self.energy_units = "eV"
-        self.sensitivity = sensitivity # Array, same size of energies, of sensitivities
-        self.sensitivity_units = "image signal per incident particle, at this energy"
+    group_type = "sensitivity"
 
-    def write(self, f, grp_name="sensitivity1"):
-        sens = f.create_group(grp_name) # TODO: Iterate on sensitivity1, sensitivity2, sensitivity3, ...
+    # Categorize the above/below public properties (but not groups) as required or optional
+    __req_ds = ["scale_factors", "energies"] # Required datasets
+    __opt_ds = ["prescale_factors", "source_flux"] # Optional datasets
+    __req_atts = [  # Required attributes
+        "group_type", 
+        "spec_name", 
+        "spec_mass", 
+        "spec_charge", 
+        ]
+    __opt_atts = []  # Optional attributes
+
+    def __init__(self, h5group=None):
+        # h5group is an open handle to an already-created HDF5 group
+        self.scale_factors = None
+        self.energies = None
+        self.prescale_factors = None
+        self.source_flux = None
         
-        if not isinstance(self.species, type(None)):
-            self.species.write(sens)
-        if not isinstance(self.energy, type(None)):
-            sens.create_dataset("energy", data=self.energy)
-        if not isinstance(self.energy_units, type(None)):
-            sens.attrs["energy_units"] = self.energy_units        
-        if not isinstance(self.sensitivity, type(None)):
-            sens.create_dataset("sensitivity", data=self.sensitivity)
-        if not isinstance(self.sensitivity_units, type(None)):
-            sens.attrs["sensitivity_units"] = self.sensitivity_units           
+        self.spec_name = None
+        self.spec_mass = None
+        self.spec_charge = None
+
+        if not isinstance(h5group, type(None)):
+            self.load(h5group)
+    
+    def validate(self):
+        # Validate that all required properties have been set.
+        # If some are not, throw an error.
+        for ds in self.__req_ds:
+            if isinstance(getattr(self, ds), type(None)):
+                raise Exception('Please assign a value to all required properties.\n The following required sensitivity dataset property is not yet assigned in at least one sensitivity: {0}.\n Assign a value via "object.sensitivities[x].{0} = value" and try again.'.format(ds))
+        for att in self.__req_atts:
+            if isinstance(getattr(self, att), type(None)):
+                raise Exception('Please assign a value to all required properties.\n The following required sensitivity attribute property is not yet assigned in at least one sensitivity: {0}.\n Assign a value via "object.sensitivies[x].{0} = value" and try again.'.format(att))
+        return
+
+    def save(self, h5group):
+        """ Saves Sensitivity object into an already-existing HDF5 group handle"""
+        self.validate() # Before writing into this group, check that all required properties are set
+        
+        f = h5group # Let's call the group handle f just for simplicity of syntax relative to other types of objects
+        
+        # Write required datasets to file within this group
+        for ds in self.__req_ds:
+            data = getattr(self, ds)
+            if hasattr(data, '__len__') and len(data) > 1:
+                f.create_dataset(ds, data=data, compression="gzip", compression_opts=compression_opts) # Compress only for datasets of length greater than one
+            else:
+                f.create_dataset(ds, data=data)
+                
+        # Write optional datasets to file within this group
+        for ds in self.__opt_ds:
+            data = getattr(self, ds)
+            if not isinstance(data, type(None)):
+                if hasattr(data, '__len__') and len(data) > 1:
+                    f.create_dataset(ds, data=data, compression="gzip", compression_opts=compression_opts) # Compress only for datasets of length greater than one
+                else:
+                    f.create_dataset(ds, data=data)
+            
+        # Write required attributes to file within this group
+        for att in self.__req_atts:
+            f.attrs[att] = getattr(self, att)
+            
+        # Write optional attributes to file within this group
+        for att in self.__opt_atts:
+            if not isinstance(getattr(self, att), type(None)): 
+                f.attrs[att] = getattr(self, att)
+
+    def load(self, h5group):
+        """ Load data from specified HDF5 group handle into this object """
+        
+        f = h5group # Let's call the group handle f just for simplicity of syntax relative to other types of objects
+        
+        # Read in required datasets
+        for ds in self.__req_ds:
+            setattr(self, ds, f["/" + ds][()])
+            
+        # Read in optional datasets
+        for ds in self.__opt_ds:
+            if ds in f.keys():
+                setattr(self, ds, f["/" + ds][()])
+            
+        # Read in required attributes
+        for att in self.__req_atts:
+            if att not in ["group_type"]:
+                setattr(self, att, f.attrs[att])
+            
+        # Read in optional attributes
+        for att in self.__opt_atts:
+            if att in f.attrs.keys(): 
+                setattr(self, att, f.attrs[att])
 
 class AdvancedRadiograph(object):
     """
     Object for storing data and attributes of a single radiograph created by multiple incident species and energies.
     """
-    def __init__(self):
-        # Attributes.
-        self.layer_name = None
-        self.image = None # 2D flux image
-        self.image_units = "image signal"
-        self.xmin = None
-        self.xmax = None
-        self.dx = None
-        self.ymin = None
-        self.ymax = None
-        self.dy = None
-        self.units = "SI" # assume SI units like meter, etc. for all quantities
-        self.source_distance = None # Distance from the radiograph to the particle source
-        self.ROI_distance = None # Distance from the radiograph to the imaged region of interest
-        self.sensitivities = None # List of sensitivity objects
-    
-    def write(self, f, grp_name="layer1"):
-        """ Write the radiograph within an open HDF5 file object or filename string f"""
-        if isinstance(f, str): # if f is not an open file handle
-            filename = f
-            f = h5py.File(filename, "w") # Overwrites if file already exists!
-        else:
-            filename = None
-        
-        rad = f.create_group(grp_name) # TODO: Iterate on layer1, layer2, layer3, ...
-        rad.attrs["type"] = "radiograph"
-        rad.attrs["pradformat_version"] = PRADFORMAT_VERSION
-        rad.attrs["pradformat_language"] = "Python"
-        if not isinstance(self.layer_name, type(None)):
-            rad.attrs["layer_name"] = self.layer_name
-        if not isinstance(self.image, type(None)):
-            rad.create_dataset("image", data=self.image)
-            rad.attrs["image_description"] = "Radiograph image for which all other attributes noted here apply."
-        if not isinstance(self.image_units, type(None)):
-            rad.attrs["image_units"] = self.image_units
-            rad.attrs["image_units_description"] = "Units for pixel values. Default is 'image signal'"
-        if not isinstance(self.xmin, type(None)):
-            rad.attrs["xmin"] = self.xmin
-            rad.attrs["xmin_description"] = "Image horizontal axis minimum x-coordinate, for the pixel edge, in the radiograph plane."
-        if not isinstance(self.xmax, type(None)):
-            rad.attrs["xmax"] = self.xmax
-            rad.attrs["xmax_description"] = "Image horizontal axis maximum x-coordinate, for the pixel edge, in the radiograph plane."
-        if not isinstance(self.dx, type(None)):
-            rad.attrs["dx"] = self.dx
-            rad.attrs["dx_description"] = "Horizontal pixel size dx for the radiograph image."
-        if not isinstance(self.ymin, type(None)):
-            rad.attrs["ymin"] = self.ymin
-            rad.attrs["ymin_description"] = "Image vertical axis minimum y-coordinate, for the pixel edge, in the radiograph plane."
-        if not isinstance(self.ymax, type(None)):
-            rad.attrs["ymax"] = self.ymax
-            rad.attrs["ymax_description"] = "Image vertical axis maximum y-coordinate, for the pixel edge, in the radiograph plane."
-        if not isinstance(self.dy, type(None)):
-            rad.attrs["dy"] = self.dy
-            rad.attrs["dy_description"] = "Vertical pixel size dy for the radiograph image."
-        if not isinstance(self.units, type(None)):
-            rad.attrs["units"] = self.units
-            rad.attrs["units_description"] = "Units system used for all attribute values of this radiograph."
-        if not isinstance(self.source_distance, type(None)):
-            rad.attrs["source_distance"] = self.source_distance
-            rad.attrs["source_distance_description"] = "Approximate distance from the particle source to the plane of the radiograph."
-        if not isinstance(self.ROI_distance, type(None)):
-            rad.attrs["ROI_distance"] = self.ROI_distance
-            rad.attrs["ROI_distance_description"] = "Approximate distance from the center of the imaged region of interest to the plane of the radiograph."
-        if not isinstance(self.sensitivities, type(None)):
-            for s in self.sensitivities:
-                s.write(rad)
+    object_type = "radiograph"
+    radiograph_type = "advanced"
 
-        if filename: # Close the file if it wasn't input as an open file handle
-            f.close()
+    # Categorize the above/below public properties (but not groups) as required or optional
+    __req_ds = ["image"] # Required datasets
+    __opt_ds = ["X", "Y", "T"] # Optional datasets
+    __req_atts = [  # Required attributes
+        "object_type", 
+        "radiograph_type", 
+        "pradformat_version", 
+        "pixel_width", 
+        ]
+    __opt_atts = [  # Optional attributes
+        "pixel_width_ax2", 
+        "source_distance", 
+        "ROI_distance", 
+        "label", 
+        "description", 
+        "experiment_date", 
+        "file_date", 
+        "raw_data_filename", 
+        ]
+
+    def __init__(self):
+        self.image = None
+        self.X = None
+        self.Y = None
+        self.T = None
+        
+        self.pradformat_version = PRADFORMAT_VERSION
+        self.pixel_width = None
+        self.pixel_width_ax2 = None
+        self.source_distance = None
+        self.ROI_distance = None
+        self.label = None
+        self.description = None
+        self.experiment_date = None
+        self.file_date = None
+        self.raw_data_filename = None
+        
+        self.sensitivities = None # List of sensitivity objects
+
+        if not isinstance(h5filename, type(None)):
+            self.load(h5filename)
+    
+    def validate(self):
+        # Validate that all required properties have been set.
+        # If some are not, throw an error.
+        for ds in self.__req_ds:
+            if isinstance(getattr(self, ds), type(None)):
+                raise Exception('Please assign a value to all required properties.\n The following required dataset property is not yet assigned: {0}.\n Assign a value via "object.{0} = value" and try again.'.format(ds))
+        for att in self.__req_atts:
+            if isinstance(getattr(self, att), type(None)):
+                raise Exception('Please assign a value to all required properties.\n The following required attribute property is not yet assigned: {0}.\n Assign a value via "object.{0} = value" and try again.'.format(att))
+        
+        # Validate all sensitivity group objects as well
+        if not isinstance(self.sensitivities, type(None)):
+            #TODO: Check that self.sensitivities is actually a proper list, and not mistakenly defined by the user as something else
+            for sens in self.sensitivities:
+                sens.validate()
+        
+        return
+
+    def save(self, filename, compression_opts=4):
+        """ Saves AdvancedRadiography object to HDF5 file"""
+        self.validate() # Before opening a new HDF5 file, check that all required properties are set
+        
+        # Create file, overwriting if file already exists
+        with h5py.File(filename, "w") as f: 
+            # Write required datasets to file
+            for ds in self.__req_ds:
+                data = getattr(self, ds)
+                if hasattr(data, '__len__') and len(data) > 1:
+                    f.create_dataset(ds, data=data, compression="gzip", compression_opts=compression_opts) # Compress only for datasets of length greater than one
+                else:
+                    f.create_dataset(ds, data=data)
+                    
+            # Write optional datasets to file
+            for ds in self.__opt_ds:
+                data = getattr(self, ds)
+                if not isinstance(data, type(None)):
+                    if hasattr(data, '__len__') and len(data) > 1:
+                        f.create_dataset(ds, data=data, compression="gzip", compression_opts=compression_opts) # Compress only for datasets of length greater than one
+                    else:
+                        f.create_dataset(ds, data=data)
+                
+            # Write required attributes to file
+            for att in self.__req_atts:
+                f.attrs[att] = getattr(self, att)
+                
+            # Write optional attributes to file
+            for att in self.__opt_atts:
+                if not isinstance(getattr(self, att), type(None)): 
+                    f.attrs[att] = getattr(self, att)
+
+            # Write the sensitivity groups
+            if not isinstance(self.sensitivities, type(None)):
+                nsens = len(self.sensitivities) # Number of sensitivity groups to create
+                for i in range(nsens):
+                    h5group = f.create_group("sensitivity" + str(i + 1)) # e.g. "sensitivity5" groupname (1-indexed per format spec)
+                    self.sensitivities[i].save(h5group) # save this sensitivity object into the above group
+
+    def load(self, h5filename):
+        """ Load data from HDF5 file into this object """
+        with h5py.File(h5filename, "r") as f: 
+            # Read in required datasets
+            for ds in self.__req_ds:
+                setattr(self, ds, f["/" + ds][()])
+                
+            # Read in optional datasets
+            for ds in self.__opt_ds:
+                if ds in f.keys():
+                    setattr(self, ds, f["/" + ds][()])
+                
+            # Read in required attributes
+            for att in self.__req_atts:
+                if att not in ["object_type", "radiograph_type"]:
+                    setattr(self, att, f.attrs[att])
+                
+            # Read in optional attributes
+            for att in self.__opt_atts:
+                if att in f.attrs.keys(): 
+                    setattr(self, att, f.attrs[att])
             
+            # TODO: Read in the sensitivities
+            i = 0
+            while "sensitivity" + str(i + 1) in f.keys(): # e.g. sensitivity1, sensitivity2, ... (zero-indexed)
+                i++
+            nsens = i # Number of sensitivites in this file
+            
+            if nsens > 0:
+                self.sensitivities = [None]*nsens
+                for i in range(nsens):
+                    h5group = f["/sensitivity" + str(i + 1)]
+                    self.sensitivities[i] = Sensitivity(h5group)
+                               
 if __name__ == "__main__":
     pass

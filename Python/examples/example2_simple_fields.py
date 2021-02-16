@@ -39,9 +39,9 @@ if __name__ == "__main__":
     # Save to file
     if not os.path.isdir("out"):
         os.mkdir("out")
-    h5filename = os.path.join("out", "example2.h5")
+    h5filename = os.path.join("out", "example2-o1.h5")
     fld.save(h5filename)
     
     # For demo purposes, read back in the file you just saved, then write it again
-    #fld2 = prf.prad_load(h5filename)
-    #fld2.save(h5filename)
+    fld2 = prf.prad_load(h5filename)
+    fld2.save(os.path.join("out", "example2-o2.h5"))

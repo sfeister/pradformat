@@ -10,12 +10,11 @@ Created by Scott Feister on Thu Feb  4 14:26:36 2021
 
 import os
 import numpy as np
-from flsuite import sftools as sf
-import pradtools as pr
+import pradformat as prf
 
 if __name__ == "__main__":
     # Construct object
-    rad = pr.SimpleRadiograph()
+    rad = prf.SimpleRadiograph()
     
     nx = 100
     ny = 300
@@ -31,10 +30,10 @@ if __name__ == "__main__":
     
     # Save to file
     if not os.path.isdir("out"):
-        os.path.mkdir("out")
-    h5filename = os.path.join("out", "example1.h5")
+        os.mkdir("out")
+    h5filename = os.path.join("out", "example1-o1.h5")
     rad.save(h5filename)
     
     # For demo purposes, read back in the file you just saved, then write it again
-    rad2 = pr.prad_load(h5filename)
-    rad2.save(h5filename)
+    rad2 = prf.prad_load(h5filename)
+    rad2.save(os.path.join("out", "example1-o2.h5"))

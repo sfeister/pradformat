@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-io.py: Reading and writing prad files; mostly wrappers around other functions
+general.py: Reading and writing prad files; mostly wrappers around other functions
 
 Created by Scott Feister on Thu Feb  4 14:33:07 2021
 """
@@ -9,6 +9,7 @@ Created by Scott Feister on Thu Feb  4 14:33:07 2021
 import h5py
 from .simple_radiograph import SimpleRadiograph
 from .simple_fields import SimpleFields
+from .particles_list import ParticlesList
 
 def prad_load(h5filename):
     """ General reader for pradformat HDF5 file formats"""
@@ -18,24 +19,24 @@ def prad_load(h5filename):
         if object_type == "radiograph":
             radiograph_type =  f.attrs["radiograph_type"]
             if radiograph_type == "simple":
-                obj = SimpleRadiograph()
+                return SimpleRadiograph(h5filename)
             else:
                 raise Exception("Bad radiograph_type.")
         elif object_type == "fields":
             fields_type = f.attrs["fields_type"]
             if fields_type == "simple":
-                obj = SimpleFields()
+                return SimpleFields(h5filename)
             else:
                 raise Exception("Bad fields_type.")
+        elif object_type == "particles":
+            particles_type = f.attrs["particles_type"]
+            if particles_type == "list":
+                return ParticlesList(h5filename)
+            else:
+                raise Exception("Bad particles_type.")
         else:
             raise Exception("Bad object_type.")
     
-    if not isinstance(obj, type(None)):
-        obj.load(h5filename)
-        return obj
-    else:
-        raise Exception("No object loaded.")
-
 def prad_save(obj, h5filename):
     """ General write of a prad object """
     obj.save(h5filename)

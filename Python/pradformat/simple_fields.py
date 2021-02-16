@@ -33,8 +33,8 @@ class SimpleFields(object):
         "file_date", 
         "raw_data_filename", 
         ]
-        
-    def __init__(self):
+                
+    def __init__(self, h5filename=None):
         self.X = None
         self.Y = None
         self.Z = None
@@ -51,6 +51,9 @@ class SimpleFields(object):
         self.description = None
         self.file_date = None
         self.raw_data_filename = None
+        
+        if not isinstance(h5filename, type(None)):
+            self.load(h5filename)
 
     def validate(self):
         # Validate that all required properties have been set.
@@ -63,7 +66,7 @@ class SimpleFields(object):
                 raise Exception('Please assign a value to all required properties.\n The following required attribute property is not yet assigned: {0}.\n Assign a value via "object.{0} = value" and try again.'.format(att))
         return
 
-    def save(self, filename):
+    def save(self, filename, compression_opts=4):
         """ Saves SimpleFields object to HDF5 file"""
         self.validate() # Before opening a new HDF5 file, check that all required properties are set
         
@@ -71,21 +74,51 @@ class SimpleFields(object):
         with h5py.File(filename, "w") as f: 
             # Write required datasets to file
             for ds in self.__req_ds:
-                f.create_dataset(ds, data=getattr(self, ds))
-                
+                data = getattr(self, ds)
+                if hasattr(data, '__len__') and len(data) > 1:
+                    f.create_dataset(ds, data=data, compression="gzip", compression_opts=compression_opts) # Compress only for datasets of length greater than one
+                else:
+                    f.create_dataset(ds, data=data)
+                    
             # Write optional datasets to file
             for ds in self.__opt_ds:
-                if not isinstance(getattr(self, ds), type(None)): 
-                    f.create_dataset(ds, data=getattr(self, ds))
+                data = getattr(self, ds)
+                if not isinstance(data, type(None)):
+                    if hasattr(data, '__len__') and len(data) > 1:
+                        f.create_dataset(ds, data=data, compression="gzip", compression_opts=compression_opts) # Compress only for datasets of length greater than one
+                    else:
+                        f.create_dataset(ds, data=data)
                 
-            # Write required datasets to file
+            # Write required attributes to file
             for att in self.__req_atts:
                 f.attrs[att] = getattr(self, att)
                 
-            # Write optional datasets to file
+            # Write optional attributes to file
             for att in self.__opt_atts:
                 if not isinstance(getattr(self, att), type(None)): 
                     f.attrs[att] = getattr(self, att)
+
+    def load(self, h5filename):
+        """ Load data from HDF5 file into this object """
+        with h5py.File(h5filename, "r") as f: 
+            # Read in required datasets
+            for ds in self.__req_ds:
+                setattr(self, ds, f["/" + ds][()])
+                
+            # Read in optional datasets
+            for ds in self.__opt_ds:
+                if ds in f.keys():
+                    setattr(self, ds, f["/" + ds][()])
+                
+            # Read in required attributes
+            for att in self.__req_atts:
+                if att not in ["object_type", "fields_type"]:
+                    setattr(self, att, f.attrs[att])
+                
+            # Read in optional attributes
+            for att in self.__opt_atts:
+                if att in f.attrs.keys(): 
+                    setattr(self, att, f.attrs[att])
 
 if __name__ == "__main__":
     pass
