@@ -18,8 +18,6 @@ Please look through the examples in this repository, under "Python/examples/" an
 It's a bit tricky to add your sensitivities to the Advanced Radiograph, so please see example4 especially before trying that one out.
 
 ## Limitations
-For simplicity, the MATLAB and Python readers in this package read the entire objects into memory (as far as I know). This will not work for large HDF5 files, and perhaps could be improved with further future readers. If you run into memory issues, I suggest reading the same files using the native HDF5 readers for MATLAB and Python (and thus avoid loading the entire datasets into RAM).
+Compression of the datasets within the HDF5 files is performed in both the Python writers and in the MATLAB writers. Compression can dramatically reduce file size. Both Python and MATLAB readers can read compressed or uncompressed datasets.
 
-Compression of the datasets within the HDF5 files is performed in the Python writers, but not in the MATLAB writers. Compression can dramatically reduce file size. Both Python and MATLAB readers can read compressed or uncompressed datasets.
-
-Currently, MATLAB is entirely missing readers/writers for Particles List and Advanced Radiograph.
+For simplicity, the MATLAB and Python readers in this package read all objects within the HDF5 files into memory (uncompressed). This is not a limitation of HDF5. If you run into memory issues while loading large datasets, I suggest writing your own bespoke MATLAB or Python code to read just the data you need using the native HDF5 readers for MATLAB and Python (and thus avoid loading the entire datasets into RAM).
