@@ -4,20 +4,5 @@
 
 The Python code, MATLAB code, and shared HDF5 file structures of this package were written by Scott Feister of California State University Channel Islands for broader use by the High Energy Density Physics Community.
 
-## File Formats (see specifications document)
-The file formats defined by the pradformat specification are defined in the **"FormatSpec.xlsx"** document, which is in the main folder of this repository. Please download this and examine it now. Keep the document handy as a reference while using the readers/writers.
-
-## Installation
-To install the MATLAB readers/writers, navigate into the Releases section -- you will download and install the toolbox. (Not yet created! Don't try this yet.)
-
-To install the Python readers/writers, navigate into the "Python" directory of this repository and follow the setup instructions in the README.
-
-## Usage
-Please look through the examples in this repository, under "Python/examples/" and "MATLAB/examples/".
-
-It's a bit tricky to add your sensitivities to the Advanced Radiograph, so please see example4 especially before trying that one out.
-
-## Limitations
-Compression of the datasets within the HDF5 files is performed in both the Python writers and in the MATLAB writers. Compression can dramatically reduce file size. Both Python and MATLAB readers can read compressed or uncompressed datasets.
-
-For simplicity, the MATLAB and Python readers in this package read all objects within the HDF5 files into memory (uncompressed). This is not a limitation of HDF5. If you run into memory issues while loading large datasets, I suggest writing your own bespoke MATLAB or Python code to read just the data you need using the native HDF5 readers for MATLAB and Python (and thus avoid loading the entire datasets into RAM).
+## Documentation
+Please visit https://scott.cikeys.com/prad/ for documentation on **pradformat**, including installation and usage.
