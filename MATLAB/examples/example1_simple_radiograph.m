@@ -20,10 +20,11 @@ rad.spec_energy = 14.7e6; % 14.7 MeV protons
 
 % Save to file
 [status, msg, msgID] = mkdir('outs');
-h5filename = fullfile('outs', 'example1.h5');
+h5filename = fullfile('outs', 'example1-o1.h5');
 prad_save(rad, h5filename);
 
 % For demo purposes, read back in the file you just saved, then write it
 % again
 rad2 = prad_load(h5filename);
+h5filename = fullfile('outs', 'example1-o2.h5');
 prad_save(rad2, h5filename);

@@ -1,13 +1,13 @@
-function obj = read_simple_fields(h5filename)
-    % read_simple_fields Read simple fields data from HDF5 file
-    obj = simple_fields;
+function obj = read_particles_list(h5filename)
+    % read_particles_list Read Particles List data from HDF5 file
+    obj = particles_list;
 
     % Check that the filetype matches and that we're using an up-to-date
-    % pradformat reader toolbox.
+    % pradformat reader toolbox (or move on if version comparison fails).
     object_type = h5readatt(h5filename, '/', 'object_type');
     assert(strcmp(object_type, obj.object_type));
-    fields_type = h5readatt(h5filename, '/', 'fields_type');
-    assert(strcmp(fields_type, obj.fields_type));
+    particles_type = h5readatt(h5filename, '/', 'particles_type');
+    assert(strcmp(particles_type, obj.particles_type));
 
     file_pradformat_version = h5readatt(h5filename, '/', 'pradformat_version');
     try
@@ -42,7 +42,7 @@ function obj = read_simple_fields(h5filename)
     % Read in required attributes
     for i=1:length(obj.req_atts)
         att = obj.req_atts(i);
-        if ~any(strcmp(att, ["object_type", "fields_type"])) % These are fixed, set by the class definition; don't try to set these.
+        if ~any(strcmp(att, ["object_type", "particles_type"])) % These are fixed, set by the class definition; don't try to set these.
             try
                 data = h5readatt(h5filename, '/', att);
                 set(obj, att, data);

@@ -1,4 +1,4 @@
-% example3_read_simple_fields.m Read in a "Simple Fields" file
+% example5_read_simple_fields.m Read in a "Simple Fields" file
 
 % filename = fullfile('..','..','Python','examples','out','example2.h5');
 filename = fullfile('..','Python','examples','out','example2-o1.h5');

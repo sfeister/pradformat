@@ -1,52 +1,43 @@
-classdef simple_radiograph < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisplay
-    % Simple Radiograph class
+classdef particles_list < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisplay
+    % Particles List class
     properties (Constant)
-        object_type = "radiograph";
-        radiograph_type = "simple";
+        object_type = "particles";
+        particles_type = "list";
     end
     properties
-        image(:,:) {mustBeNumeric}
-        X(:,:) {mustBeNumeric}
-        Y(:,:) {mustBeNumeric}
-        T(:,:) double
-        pradformat_version string = pradformat_version()
-        scale_factor double
-        pixel_width double
-        pixel_width_ax2 double
-        source_distance double
-        ROI_distance double
-        spec_name string
-        spec_mass double
-        spec_charge double
-        spec_energy double
+        x (:,:) {mustBeNumeric}
+        y (:,:) {mustBeNumeric}
+        z (:,:) {mustBeNumeric}
+        px (:,:) {mustBeNumeric}
+        py (:,:) {mustBeNumeric}
+        pz (:,:) {mustBeNumeric}
+        charge (:,:) {mustBeNumeric}
+        mass (:,:) {mustBeNumeric}
+        energy (:,:) {mustBeNumeric}
+        weight (:,:) {mustBeNumeric}
+        spec_name (:,:) string
+        id (:,:) {mustBeNumeric}
+        
+        pradformat_version string = "0.1.0"
+        shuffled {mustBeNonnegative, mustBeInteger}
         label string
         description string
-        experiment_date string
         file_date string
         raw_data_filename string       
     end
     properties (Hidden)
         % Categorize the above public properties as required or optional
-        req_ds = ["image"]; % Required datasets
-        opt_ds = ["X", "Y", "T"]; % Optional datasets
+        req_ds = ["x", "y", "z", "px", "py", "pz", "charge", "mass"]; % Required datasets
+        opt_ds = ["energy", "weight", "spec_name", "id"]; % Optional datasets
         req_atts = [...  % Required attributes
             "object_type", ...
-            "radiograph_type", ...
+            "particles_type", ...
             "pradformat_version", ...
-            "scale_factor", ...
-            "pixel_width", ...
             ];
         opt_atts = [...  % Optional attributes
-            "pixel_width_ax2", ...
-            "source_distance", ...
-            "ROI_distance", ...
-            "spec_name", ...
-            "spec_mass", ...
-            "spec_charge", ...
-            "spec_energy", ...
+            "shuffled", ...
             "label", ...
             "description", ...
-            "experiment_date", ...
             "file_date", ...
             "raw_data_filename", ...
             ];
@@ -79,7 +70,7 @@ classdef simple_radiograph < matlab.mixin.SetGetExactNames & matlab.mixin.Custom
     end
     methods
         function prad_save(obj, h5filename)
-            % Saves Simple Radiograph object to HDF5 file
+            % Saves Particles List object to HDF5 file
             obj.validate();
             
             % Delete any existing file

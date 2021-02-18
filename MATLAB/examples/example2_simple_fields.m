@@ -27,10 +27,11 @@ fld.Bz = 8.123; % Magnetic fields that depend on X, Y, and Z
 
 % Save to file
 [status, msg, msgID] = mkdir('outs');
-h5filename = fullfile('outs', 'example2.h5');
+h5filename = fullfile('outs', 'example2-o1.h5');
 prad_save(fld, h5filename);
 
 % For demo purposes, read back in the file you just saved, then write it
 % again
 fld2 = prad_load(h5filename);
+h5filename = fullfile('outs', 'example2-o2.h5');
 prad_save(fld2, h5filename);

@@ -9,10 +9,10 @@ function obj = read_simple_radiograph(h5filename)
     radiograph_type = h5readatt(h5filename, '/', 'radiograph_type');
     assert(strcmp(radiograph_type, obj.radiograph_type));
 
-    pradformat_version = h5readatt(h5filename, '/', 'pradformat_version');
+    file_pradformat_version = h5readatt(h5filename, '/', 'pradformat_version');
     try
-        if verparse(pradformat_version) > verparse(obj.pradformat_version)
-            warning(['Your MATLAB pradformat toolbox is out of date. The file you are about to load was generated with version ' char(pradformat_version) ', but your toolbox version is only ' char(obj.pradformat_version) '. For best compatibility, download the latest pradformat toolbox by visiting "https://github.com/phyzicist/pradformat".'])
+        if verparse(file_pradformat_version) > verparse(pradformat_version())
+            warning(['Your MATLAB pradformat toolbox is out of date. The file you are about to load was generated with version ' char(file_pradformat_version) ', but your toolbox version is only ' char(pradformat_version()) '. For best compatibility, download the latest pradformat toolbox by visiting "https://github.com/phyzicist/pradformat".'])
         end
     catch
         warning("Failed to identify whether your pradformat toolbox version is up-to-date with the file format version you're reading. Proceed with caution!")
@@ -25,7 +25,7 @@ function obj = read_simple_radiograph(h5filename)
             data = h5read(h5filename, ['/' char(ds)]);
             set(obj, ds, data);
         catch
-            warning(['Failed to read in expected dataset "' char(ds) '". Could it be missing from this file?'])
+            warning(['Failed to read in required dataset "' char(ds) '". Could it be missing from this file?'])
         end
     end
 
@@ -47,7 +47,7 @@ function obj = read_simple_radiograph(h5filename)
                 data = h5readatt(h5filename, '/', att);
                 set(obj, att, data);
             catch
-                warning(['Failed to read in expected attribute "' char(att) '". Could it be missing from this file?'])
+                warning(['Failed to read in required attribute "' char(att) '". Could it be missing from this file?'])
             end
         end
     end

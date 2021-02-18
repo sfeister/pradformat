@@ -15,7 +15,7 @@ classdef simple_fields < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisp
         By (:,:,:) {mustBeNumeric}
         Bz (:,:,:) {mustBeNumeric}
         rho (:,:,:) {mustBeNumeric}
-        pradformat_version string = "0.0.0"
+        pradformat_version string = pradformat_version()
         rho_description string
         label string
         description string
@@ -67,46 +67,16 @@ classdef simple_fields < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisp
     end
     methods
         function prad_save(obj, h5filename)
-            % Saves simple fields to HDF5 file
-            obj.validate(); % Throw an error if any required properties are missing
+            % Saves Simple Fields object to HDF5 file
+            obj.validate();
             
-            % Create file
+            % Delete any existing file
             if isfile(h5filename)
-                delete(h5filename); % truncate current file
+                delete(h5filename);
             end
             
-            % Write required datasets to file % TODO: Force a certain array
-            % size
-            for i=1:length(obj.req_ds) %TODO: Add chunking and compression?)
-                ds = obj.req_ds(i);
-                data = get(obj, ds);
-                h5create(h5filename, ['/' char(ds)], size(data));
-                h5write(h5filename, ['/' char(ds)], data);
-            end
-            
-            % Write optional datasets to file
-            for i=1:length(obj.opt_ds) %TODO: Add chunking and compression?)
-                ds = obj.opt_ds(i);
-                data = get(obj, ds);
-                if ~isempty(data)
-                    h5create(h5filename, ['/' char(ds)], size(data));
-                    h5write(h5filename, ['/' char(ds)], data);
-                end
-            end
-            
-            % Write required attributes to file
-            for i=1:length(obj.req_atts)
-                att = obj.req_atts(i);
-                h5writeatt(h5filename, '/', att, get(obj, att));
-            end
-
-            % Write optional attributes to file
-            for i=1:length(obj.opt_atts)
-                att = obj.opt_atts(i);
-                if ~isempty(get(obj, att))
-                    h5writeatt(h5filename, '/', att, get(obj, att));
-                end
-            end
+            % Create new file and save object into it
+            save_prad_group(obj, h5filename, "/")
         end
     end
 end
