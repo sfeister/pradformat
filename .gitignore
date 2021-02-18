@@ -2,6 +2,7 @@
 out/
 outs/
 ~*.xlsx
+site/
 
 # Matlab extra publishing stuff
 demos.xml

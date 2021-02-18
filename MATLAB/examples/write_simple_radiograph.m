@@ -1,4 +1,4 @@
-% write1_simple_radiograph.py: A template for writing your own Simple Radiographs
+% write_simple_radiograph.m: A template for writing your own Simple Radiographs
 
 %% Construct object
 rad = SimpleRadiograph;
@@ -40,11 +40,10 @@ disp(rad)
 h5filename = fullfile('outs', 'myradiograph.h5');
 prad_save(rad, h5filename);
 
-
 %%  Asterixed footnotes referenced above:
 %
 %  * The convention of this format is that the image lies in the z=0 plane of the radiograph coordinate system, and that the z-axis will point towards the particle source. The image may be stored already cropped and rotated by any angle within the x-y radiograph coordinate system, which is why X and Y are specified as arrays rather than vectors.
 %
 %  ** For best compatibility, consider using the PlasmaPy particle symbol conventions. https://docs.plasmapy.org/en/stable/api/plasmapy.particles.particle_symbol.html
-%     For example, protons can be specified as just ìp+î, and electrons by "e-". Any arbitrary isotope of Hydrogen can be specified ì H-I q+î where I is the mass number and q is the charge.
+%     For example, protons can be specified as just ‚Äúp+‚Äù, and electrons by "e-". Any arbitrary isotope of Hydrogen can be specified ‚Äú H-I q+‚Äù where I is the mass number and q is the charge.
 %
