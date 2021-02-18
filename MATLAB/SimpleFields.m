@@ -1,4 +1,4 @@
-classdef simple_fields < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisplay
+classdef SimpleFields < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisplay
     % Simple Fields class
     properties (Constant)
         object_type = "fields";
@@ -38,6 +38,9 @@ classdef simple_fields < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisp
             "file_date", ...
             "raw_data_filename", ...
             ];
+        % List for a second time any above properties that are constants
+        % of the class (and are not to be overwritten when reading from file)
+        const_atts = ["object_type", "fields_type"]
     end
     methods (Access = protected)
        function propgrps = getPropertyGroups(obj)
@@ -66,6 +69,13 @@ classdef simple_fields < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisp
        end
     end
     methods
+        function obj = SimpleFields(h5filename)
+            % Constructor method - load object from file
+            if nargin == 1
+                % Load in the prad object from h5filename
+                load_prad_group(obj, h5filename, "/")
+            end
+        end
         function prad_save(obj, h5filename)
             % Saves Simple Fields object to HDF5 file
             obj.validate();

@@ -4,7 +4,7 @@
 % Example 100x300 CR39 radiograph for 14.7 MeV protons
 
 % Construct object
-plist = particles_list;
+plist = ParticlesList;
 
 % Define some general attributes
 plist.label = "ebeam_100MeV";

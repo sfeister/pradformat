@@ -4,7 +4,7 @@
 % Example 100x300 CR39 radiograph for 14.7 MeV protons
 
 % Construct object
-rad = simple_radiograph; % Initialize "rad" as an object of class "simple_radiograph"
+rad = SimpleRadiograph; % Initialize "rad" as an object of class "SimpleRadiograph"
 
 nx = 100;
 ny = 300;

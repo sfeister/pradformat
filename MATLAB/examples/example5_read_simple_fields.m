@@ -7,5 +7,5 @@ fld = prad_load(filename);
 
 % Save to file
 [status, msg, msgID] = mkdir('outs');
-h5filename = fullfile('outs', 'example3.h5');
+h5filename = fullfile('outs', 'example5.h5');
 prad_save(fld, h5filename);

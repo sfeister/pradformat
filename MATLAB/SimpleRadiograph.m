@@ -1,4 +1,4 @@
-classdef simple_radiograph < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisplay
+classdef SimpleRadiograph < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisplay
     % Simple Radiograph class
     properties (Constant)
         object_type = "radiograph";
@@ -50,6 +50,9 @@ classdef simple_radiograph < matlab.mixin.SetGetExactNames & matlab.mixin.Custom
             "file_date", ...
             "raw_data_filename", ...
             ];
+        % List for a second time any above properties that are constants
+        % of the class (and are not to be overwritten when reading from file)
+        const_atts = ["object_type", "radiograph_type"]
     end
     methods (Access = protected)
        function propgrps = getPropertyGroups(obj)
@@ -78,6 +81,13 @@ classdef simple_radiograph < matlab.mixin.SetGetExactNames & matlab.mixin.Custom
        end
     end
     methods
+        function obj = SimpleRadiograph(h5filename)
+            % Constructor method - load object from file
+            if nargin == 1
+                % Load in the prad object from h5filename
+                load_prad_group(obj, h5filename, "/")
+            end
+        end
         function prad_save(obj, h5filename)
             % Saves Simple Radiograph object to HDF5 file
             obj.validate();

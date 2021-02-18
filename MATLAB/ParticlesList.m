@@ -1,4 +1,4 @@
-classdef particles_list < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisplay
+classdef ParticlesList < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisplay
     % Particles List class
     properties (Constant)
         object_type = "particles";
@@ -41,6 +41,9 @@ classdef particles_list < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDis
             "file_date", ...
             "raw_data_filename", ...
             ];
+        % List for a second time any above properties that are constants
+        % of the class (and are not to be overwritten when reading from file)
+        const_atts = ["object_type", "particles_type"]
     end
     methods (Access = protected)
        function propgrps = getPropertyGroups(obj)
@@ -69,6 +72,13 @@ classdef particles_list < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDis
        end
     end
     methods
+        function obj = ParticlesList(h5filename)
+            % Constructor method - load object from file
+            if nargin == 1
+                % Load in the prad object from h5filename
+                load_prad_group(obj, h5filename, "/")
+            end
+        end
         function prad_save(obj, h5filename)
             % Saves Particles List object to HDF5 file
             obj.validate();

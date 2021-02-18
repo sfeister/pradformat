@@ -6,7 +6,7 @@
 % and (-20.0, 20.0) meters, respectively.
 
 % Construct object
-fld = simple_fields;
+fld = SimpleFields;
 
 nx = 100;
 ny = 300;

@@ -43,7 +43,7 @@ function [] = save_prad_group(obj, h5filename, h5root)
             % do nothing
         elseif isstring(data) && verLessThan('matlab', '9.8')
             % skip dataset due to incompatibility
-            warning(['Skipping writing optional dataset ' char(ds) ' because writing string arrays to HDF5 is unsupported prior to MATLAB R2020a. Upgrade MATLAB to R2020a+ to avoid skipping over this dataset.'])
+            warning(['Skipping writing optional dataset "' char(ds) '" because writing string arrays to HDF5 is unsupported prior to MATLAB R2020a. Upgrade MATLAB to R2020a+ to avoid skipping over this dataset.'])
         elseif ~isscalar(data)
             % write compressed dataset
             h5create(h5filename, [h5root char(ds)], size(data),...
