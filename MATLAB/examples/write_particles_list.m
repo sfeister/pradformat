@@ -1,4 +1,6 @@
-% write_simple_radiograph.m: A template for writing your own Particles List
+% write_particles_list.m: A template for writing your own Particles List
+
+% Example 100x300 CR39 radiograph for 14.7 MeV protons
 
 % Construct object
 plist = ParticlesList;

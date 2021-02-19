@@ -1,12 +1,14 @@
 <deployment-project plugin="plugin.toolbox" plugin-version="1.0">
-  <configuration build-checksum="1474772409" file="C:\Users\scott\Documents\SourceTree\pradformat\MATLAB\pradformat.prj" location="C:\Users\scott\Documents\SourceTree\pradformat\MATLAB" name="pradformat" target="target.toolbox" target-name="Package Toolbox">
+  <configuration build-checksum="1591616491" file="C:\Users\scott\Documents\SourceTree\pradformat\MATLAB\pradformat.prj" location="C:\Users\scott\Documents\SourceTree\pradformat\MATLAB" name="pradformat" target="target.toolbox" target-name="Package Toolbox">
     <param.appname>pradformat</param.appname>
     <param.authnamewatermark>Scott Feister</param.authnamewatermark>
     <param.email>scott.feister@csuci.edu</param.email>
     <param.company>California State Univ. Channel Islands</param.company>
-    <param.summary>Proton Radiography File Format Tools for High Energy Density Physics.</param.summary>
-    <param.description>See https://github.com/phyzicist/pradformat for up-to-date toolbox and documentation.</param.description>
-    <param.screenshot>C:\Users\scott\Pictures\jets.PNG</param.screenshot>
+    <param.summary>Proton Radiography File Formats for High Energy Density Physics.</param.summary>
+    <param.description>Visit https://scott.cikeys.com/prad/ for documentation on getting started.
+
+See https://github.com/phyzicist/pradformat for up-to-date toolbox downloads.</param.description>
+    <param.screenshot>C:\Users\scott\Documents\SourceTree\pradformat\icon\icon_wikimedia_ferris_wheel.jpg</param.screenshot>
     <param.version>0.1.0</param.version>
     <param.output>${PROJECT_ROOT}\pradformat.mltbx</param.output>
     <param.products.name />
@@ -60,13 +62,53 @@ outs/
          &lt;file type="main"&gt;/examples/example4_advanced_radiograph.m&lt;/file&gt;
          &lt;file type="thumbnail"/&gt;
       &lt;/example&gt;
+      &lt;example name="example5_read_simple_fields" type="html"&gt;
+         &lt;file type="source"&gt;/examples/html/example5_read_simple_fields.html&lt;/file&gt;
+         &lt;file type="main"&gt;/examples/example5_read_simple_fields.m&lt;/file&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="read_extended" type="html"&gt;
+         &lt;file type="source"&gt;/examples/html/read_extended.html&lt;/file&gt;
+         &lt;file type="main"&gt;/examples/read_extended.m&lt;/file&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="read_simple_fields" type="html"&gt;
+         &lt;file type="source"&gt;/examples/html/read_simple_fields.html&lt;/file&gt;
+         &lt;file type="main"&gt;/examples/read_simple_fields.m&lt;/file&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="read_simple_radiograph" type="html"&gt;
+         &lt;file type="source"&gt;/examples/html/read_simple_radiograph.html&lt;/file&gt;
+         &lt;file type="main"&gt;/examples/read_simple_radiograph.m&lt;/file&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="write_extended" type="html"&gt;
+         &lt;file type="source"&gt;/examples/html/write_extended.html&lt;/file&gt;
+         &lt;file type="main"&gt;/examples/write_extended.m&lt;/file&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="write_particles_list" type="html"&gt;
+         &lt;file type="source"&gt;/examples/html/write_particles_list.html&lt;/file&gt;
+         &lt;file type="main"&gt;/examples/write_particles_list.m&lt;/file&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="write_simple_fields" type="html"&gt;
+         &lt;file type="source"&gt;/examples/html/write_simple_fields.html&lt;/file&gt;
+         &lt;file type="main"&gt;/examples/write_simple_fields.m&lt;/file&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="write_simple_radiograph" type="html"&gt;
+         &lt;file type="source"&gt;/examples/html/write_simple_radiograph.html&lt;/file&gt;
+         &lt;file type="main"&gt;/examples/write_simple_radiograph.m&lt;/file&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
    &lt;/exampleCategory&gt;
 &lt;/examples&gt;</param.examples>
     <param.demosxml />
     <param.apps />
     <param.registered.apps />
     <param.docs />
-    <param.getting.started.guide />
+    <param.getting.started.guide>${PROJECT_ROOT}\doc\GettingStarted.mlx</param.getting.started.guide>
     <param.matlabpath.excludes>
       <item>/outs</item>
       <item>/examples</item>
@@ -103,7 +145,6 @@ outs/
       <param.apps />
       <param.registered.apps />
       <param.docs />
-      <param.getting.started.guide />
       <param.javaclasspath.excludes />
       <param.required.addons />
       <param.matlab.project.id />
@@ -125,7 +166,9 @@ outs/
     </fileset.rootdir>
     <fileset.rootfiles>
       <file>${PROJECT_ROOT}\AdvancedRadiograph.m</file>
+      <file>${PROJECT_ROOT}\autochunksize.m</file>
       <file>${PROJECT_ROOT}\demos.xml</file>
+      <file>${PROJECT_ROOT}\doc</file>
       <file>${PROJECT_ROOT}\examples</file>
       <file>${PROJECT_ROOT}\ParticlesList.m</file>
       <file>${PROJECT_ROOT}\prad_load.m</file>
