@@ -88,10 +88,11 @@ classdef AdvancedRadiograph < matlab.mixin.SetGetExactNames & matlab.mixin.Custo
                 for i=1:100000
                     h5root = sprintf("/sensitivity%d", i);
                     try
-                        h5info(h5root) % will return error if h5root location does not exist
+                        h5info(h5filename, h5root) % will return error if h5root location does not exist
                     catch
                         break
                     end
+                    obj.sensitivities{i} = Sensitivity;
                     load_prad_group(obj.sensitivities{i}, h5filename, h5root)
                 end
             end
@@ -103,6 +104,9 @@ classdef AdvancedRadiograph < matlab.mixin.SetGetExactNames & matlab.mixin.Custo
             % Delete any existing file
             if isfile(h5filename)
                 delete(h5filename);
+                if isfile(h5filename)
+                    error(['The existing HDF5 file: "' h5filename '" could not be overwritten.' newline 'Perhaps you do not have permissions to delete this file.' newline 'For example, perhaps the file is open and being read by another program, like HDFView? If so, close the file in that program.' newline 'Or, perhaps this file handle is currently open in MATLAB? Try the command fclose(''all'') to close all current file handles.' newline 'If all else fails, try manually deleting the file in question, or change your desired output filename to something else.' newline 'Once you''re done troubleshooting, run your script again.']);
+                end
             end
             
             % Create new file and save object into it

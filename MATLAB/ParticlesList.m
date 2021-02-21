@@ -18,7 +18,7 @@ classdef ParticlesList < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisp
         spec_name (:,:) string
         id (:,:) {mustBeNumeric}
         
-        pradformat_version string = "0.1.0"
+        pradformat_version string = pradformat_version()
         shuffled {mustBeNonnegative, mustBeInteger}
         label string
         description string
@@ -86,6 +86,9 @@ classdef ParticlesList < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisp
             % Delete any existing file
             if isfile(h5filename)
                 delete(h5filename);
+                if isfile(h5filename)
+                    error(['The existing HDF5 file: "' h5filename '" could not be overwritten.' newline 'Perhaps you do not have permissions to delete this file.' newline 'For example, perhaps the file is open and being read by another program, like HDFView? If so, close the file in that program.' newline 'Or, perhaps this file handle is currently open in MATLAB? Try the command fclose(''all'') to close all current file handles.' newline 'If all else fails, try manually deleting the file in question, or change your desired output filename to something else.' newline 'Once you''re done troubleshooting, run your script again.']);
+                end
             end
             
             % Create new file and save object into it

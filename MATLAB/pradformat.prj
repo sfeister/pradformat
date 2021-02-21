@@ -9,7 +9,7 @@
 
 See https://github.com/phyzicist/pradformat for up-to-date toolbox downloads.</param.description>
     <param.screenshot>C:\Users\scott\Documents\SourceTree\pradformat\icon\icon_wikimedia_ferris_wheel.jpg</param.screenshot>
-    <param.version>0.1.0</param.version>
+    <param.version>0.1.1</param.version>
     <param.output>${PROJECT_ROOT}\pradformat.mltbx</param.output>
     <param.products.name />
     <param.products.id />
@@ -42,34 +42,19 @@ outs/
     <param.examples>&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;examples&gt;
    &lt;exampleCategory name="examples"&gt;
-      &lt;example name="example1_simple_radiograph" type="html"&gt;
-         &lt;file type="source"&gt;/examples/html/example1_simple_radiograph.html&lt;/file&gt;
-         &lt;file type="main"&gt;/examples/example1_simple_radiograph.m&lt;/file&gt;
-         &lt;file type="thumbnail"/&gt;
-      &lt;/example&gt;
-      &lt;example name="example2_simple_fields" type="html"&gt;
-         &lt;file type="source"&gt;/examples/html/example2_simple_fields.html&lt;/file&gt;
-         &lt;file type="main"&gt;/examples/example2_simple_fields.m&lt;/file&gt;
-         &lt;file type="thumbnail"/&gt;
-      &lt;/example&gt;
-      &lt;example name="example3_particles_list" type="html"&gt;
-         &lt;file type="source"&gt;/examples/html/example3_particles_list.html&lt;/file&gt;
-         &lt;file type="main"&gt;/examples/example3_particles_list.m&lt;/file&gt;
-         &lt;file type="thumbnail"/&gt;
-      &lt;/example&gt;
-      &lt;example name="example4_advanced_radiograph" type="html"&gt;
-         &lt;file type="source"&gt;/examples/html/example4_advanced_radiograph.html&lt;/file&gt;
-         &lt;file type="main"&gt;/examples/example4_advanced_radiograph.m&lt;/file&gt;
-         &lt;file type="thumbnail"/&gt;
-      &lt;/example&gt;
-      &lt;example name="example5_read_simple_fields" type="html"&gt;
-         &lt;file type="source"&gt;/examples/html/example5_read_simple_fields.html&lt;/file&gt;
-         &lt;file type="main"&gt;/examples/example5_read_simple_fields.m&lt;/file&gt;
+      &lt;example name="read_advanced_radiograph" type="html"&gt;
+         &lt;file type="source"&gt;/examples/html/read_advanced_radiograph.html&lt;/file&gt;
+         &lt;file type="main"&gt;/examples/read_advanced_radiograph.m&lt;/file&gt;
          &lt;file type="thumbnail"/&gt;
       &lt;/example&gt;
       &lt;example name="read_extended" type="html"&gt;
          &lt;file type="source"&gt;/examples/html/read_extended.html&lt;/file&gt;
          &lt;file type="main"&gt;/examples/read_extended.m&lt;/file&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="read_particles_list" type="html"&gt;
+         &lt;file type="source"&gt;/examples/html/read_particles_list.html&lt;/file&gt;
+         &lt;file type="main"&gt;/examples/read_particles_list.m&lt;/file&gt;
          &lt;file type="thumbnail"/&gt;
       &lt;/example&gt;
       &lt;example name="read_simple_fields" type="html"&gt;
@@ -80,6 +65,11 @@ outs/
       &lt;example name="read_simple_radiograph" type="html"&gt;
          &lt;file type="source"&gt;/examples/html/read_simple_radiograph.html&lt;/file&gt;
          &lt;file type="main"&gt;/examples/read_simple_radiograph.m&lt;/file&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="write_advanced_radiograph" type="html"&gt;
+         &lt;file type="source"&gt;/examples/html/write_advanced_radiograph.html&lt;/file&gt;
+         &lt;file type="main"&gt;/examples/write_advanced_radiograph.m&lt;/file&gt;
          &lt;file type="thumbnail"/&gt;
       &lt;/example&gt;
       &lt;example name="write_extended" type="html"&gt;

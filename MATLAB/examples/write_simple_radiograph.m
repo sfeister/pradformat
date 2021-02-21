@@ -13,7 +13,7 @@ rad.image = zeros(M, N); % required | Radiograph image (cropped and rotated, if 
 % rad.T = zeros(3,3); % optional | Change-of-basis matrix (a.k.a. transition matrix) to move from x, y, z radiograph coordinate system* to x', y', z' global coordinate system of the target chamber. [x' y' z'] = T [x y z].
 
 % disp(rad.object_type) % already-set | Specification of the HDF5 object type | "radiograph" (always this value)
-% disp(rad.radiograph_type) % already-set | Specification of the HDF5 object type | "simple" (always this value)
+% disp(rad.radiograph_type) % already-set | Specification of the radiograph sub-type | "simple" (always this value)
 % disp(rad.pradformat_version) % already-set | HDF5 pradformat file format version followed | e.g. "0.1.0"
 
 rad.scale_factor = 1.0; % required | Multiplier to convert pixel counts into particle counts | particles/pixel count
@@ -45,5 +45,5 @@ prad_save(rad, h5filename);
 %  * The convention of this format is that the image lies in the z=0 plane of the radiograph coordinate system, and that the z-axis will point towards the particle source. The image may be stored already cropped and rotated by any angle within the x-y radiograph coordinate system, which is why X and Y are specified as arrays rather than vectors.
 %
 %  ** For best compatibility, consider using the PlasmaPy particle symbol conventions. https://docs.plasmapy.org/en/stable/api/plasmapy.particles.particle_symbol.html
-%     For example, protons can be specified as just “p+”, and electrons by "e-". Any arbitrary isotope of Hydrogen can be specified “ H-I q+” where I is the mass number and q is the charge.
+%     For example, protons can be specified as just "p+", and electrons by "e-". Any arbitrary isotope of Hydrogen can be specified "H-I q+"? where I is the mass number and q is the charge.
 %

@@ -71,7 +71,7 @@ class ParticlesList(object):
         return
 
     def save(self, filename, compression_opts=4):
-        """ Saves SimpleFields object to HDF5 file"""
+        """ Saves object to HDF5 file"""
         self.validate() # Before opening a new HDF5 file, check that all required properties are set
         
         # Create file, overwriting if file already exists
@@ -88,10 +88,18 @@ class ParticlesList(object):
             for ds in self.__opt_ds:
                 data = getattr(self, ds)
                 if not isinstance(data, type(None)):
-                    if not np.isscalar(data):
-                        f.create_dataset(ds, data=data, compression="gzip", compression_opts=compression_opts) # Compress only for datasets of length greater than one
+                    if ds in ["spec_name"]: # string scalars/arrays require special handling
+                        dt = h5py.special_dtype(vlen=str)
+                        if not np.isscalar(data):
+                            dset = f.create_dataset(ds, np.shape(data), dtype=dt, compression="gzip", compression_opts=compression_opts)
+                            dset[:] = np.array(data)[:]
+                        else:
+                            f.create_dataset(ds, data=data)                       
                     else:
-                        f.create_dataset(ds, data=data)
+                        if not np.isscalar(data):
+                            f.create_dataset(ds, data=data, compression="gzip", compression_opts=compression_opts) # Compress only for datasets of length greater than one
+                        else:
+                            f.create_dataset(ds, data=data)                       
                 
             # Write required attributes to file
             for att in self.__req_atts:

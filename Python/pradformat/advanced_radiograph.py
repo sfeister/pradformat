@@ -18,7 +18,7 @@ class Sensitivity(object):
 
     # Categorize the above/below public properties (but not groups) as required or optional
     __req_ds = ["energies", "scale_factors"] # Required datasets
-    __opt_ds = ["prescale_factors", "source_flux"] # Optional datasets
+    __opt_ds = ["prescale_factors"] # Optional datasets
     __req_atts = [  # Required attributes
         "group_type", 
         "spec_name", 
@@ -32,7 +32,6 @@ class Sensitivity(object):
         self.energies = None
         self.scale_factors = None
         self.prescale_factors = None
-        self.source_flux = None
         
         self.spec_name = None
         self.spec_mass = None
@@ -152,7 +151,7 @@ class AdvancedRadiograph(object):
         self.file_date = datetime.now().strftime("%Y-%m-%d")
         self.raw_data_filename = None
         
-        self.sensitivities = None # List of sensitivity objects
+        self.sensitivities = [] # List of sensitivity objects
 
         if not isinstance(h5filename, type(None)):
             self.load(h5filename)

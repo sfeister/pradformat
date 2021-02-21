@@ -7,7 +7,6 @@ classdef Sensitivity < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDispla
         energies(:,:) {mustBeNumeric}
         scale_factors(:,:,:) {mustBeNumeric}
         prescale_factors(:,:,:) {mustBeNumeric}
-        source_flux(:,:,:) {mustBeNumeric}
         
         spec_name string
         spec_mass double
@@ -16,7 +15,7 @@ classdef Sensitivity < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDispla
     properties (Hidden)
         % Categorize the above public properties as required or optional
         req_ds = ["energies", "scale_factors"]; % Required datasets
-        opt_ds = ["prescale_factors", "source_flux"]; % Optional datasets
+        opt_ds = ["prescale_factors"]; % Optional datasets
         req_atts = [...  % Required attributes
             "group_type", ...
             "spec_name", ...
