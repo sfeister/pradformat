@@ -39,6 +39,38 @@ class Sensitivity(object):
 
         if not isinstance(h5group, type(None)):
             self.load(h5group)
+
+    def __str__(self):
+        mystr = "Sensitivity Object\n\n"
+        mystr += "Required datasets: \n"
+        for ds in self.__req_ds:
+            data = getattr(self, ds)
+            mystr += "  " + ds + ": "
+            if isinstance(data, np.ndarray):
+                mystr += str(data.shape) + " ndarray, dtype " + str(data.dtype)
+            else:
+                mystr += str(data)
+            mystr += "\n"
+                
+        mystr += "\nOptional datasets: \n"
+        for ds in self.__opt_ds:
+            data = getattr(self, ds)
+            mystr += "  " + ds + ": "
+            if isinstance(data, np.ndarray):
+                mystr += str(data.shape) + " ndarray, dtype " + str(data.dtype)
+            else:
+                mystr += str(data)
+            mystr += "\n"
+            
+        mystr += "\nRequired attributes: \n"
+        for att in self.__req_atts:
+            mystr += "  " + att + ": " + str(getattr(self, att)) + "\n"
+            
+        mystr += "\nOptional attributes: \n"
+        for att in self.__opt_atts:
+            mystr += "  " + att + ": " + str(getattr(self, att)) + "\n"
+        
+        return mystr 
     
     def validate(self):
         # Validate that all required properties have been set.
@@ -155,7 +187,40 @@ class AdvancedRadiograph(object):
 
         if not isinstance(h5filename, type(None)):
             self.load(h5filename)
-    
+
+    def __str__(self):
+        mystr = "Advanced Radiograph Object\n\n"
+        mystr += "Required datasets: \n"
+        for ds in self.__req_ds:
+            data = getattr(self, ds)
+            mystr += "  " + ds + ": "
+            if isinstance(data, np.ndarray):
+                mystr += str(data.shape) + " ndarray, dtype " + str(data.dtype)
+            else:
+                mystr += str(data)
+            mystr += "\n"
+                
+        mystr += "\nOptional datasets: \n"
+        for ds in self.__opt_ds:
+            data = getattr(self, ds)
+            mystr += "  " + ds + ": "
+            if isinstance(data, np.ndarray):
+                mystr += str(data.shape) + " ndarray, dtype " + str(data.dtype)
+            else:
+                mystr += str(data)
+            mystr += "\n"
+            
+        mystr += "\nRequired attributes: \n"
+        for att in self.__req_atts:
+            mystr += "  " + att + ": " + str(getattr(self, att)) + "\n"
+            
+        mystr += "\nOptional attributes: \n"
+        for att in self.__opt_atts:
+            mystr += "  " + att + ": " + str(getattr(self, att)) + "\n"
+        
+        mystr += "\nSensitivities: " + str(self.sensitivities) + "\n"
+        return mystr 
+ 
     def validate(self):
         # Validate that all required properties have been set.
         # If some are not, throw an error.
