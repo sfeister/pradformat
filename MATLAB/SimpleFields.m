@@ -19,7 +19,7 @@ classdef SimpleFields < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDispl
         rho_description string
         label string
         description string
-        file_date string
+        file_date string = datestr(datetime('now'), 'yyyy-mm-dd')
         raw_data_filename string       
     end
     properties (Hidden)

@@ -22,7 +22,7 @@ classdef ParticlesList < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisp
         shuffled {mustBeNonnegative, mustBeInteger}
         label string
         description string
-        file_date string
+        file_date string = datestr(datetime('now'), 'yyyy-mm-dd')
         raw_data_filename string       
     end
     properties (Hidden)

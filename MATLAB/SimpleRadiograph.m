@@ -22,7 +22,7 @@ classdef SimpleRadiograph < matlab.mixin.SetGetExactNames & matlab.mixin.CustomD
         label string
         description string
         experiment_date string
-        file_date string
+        file_date string = datestr(datetime('now'), 'yyyy-mm-dd')
         raw_data_filename string       
     end
     properties (Hidden)

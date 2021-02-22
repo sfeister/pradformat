@@ -1,4 +1,4 @@
-# read_advanced_radiograph.m: Template for reading Advanced Radiographs
+# read_advanced_radiograph.py: Template for reading Advanced Radiographs
 
 import os
 import numpy as np
