@@ -7,9 +7,9 @@ function [chunksize] = autochunksize(data)
 % I wish I didn't have to write this function.
 % Why isn't auto-chunking already built into MATLAB's h5write? I just don't know.
 %
-% Written by Scott Feister on Feb 17 2020. 
-   
-    bytes_per_elem = whos('data').bytes / numel(data); % average bytes per data element
+% Written by Scott Feister on Feb 17 2021. 
+    mywhos = whos('data');
+    bytes_per_elem = mywhos.bytes / numel(data); % average bytes per data element
     target_numel = 1e6 / bytes_per_elem; % target number of data elements per chunk, for 1 MB chunks
     
     for i=0:100

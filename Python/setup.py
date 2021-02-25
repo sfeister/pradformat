@@ -10,7 +10,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='pradformat',
-    version='0.1.1',
+    version='0.1.2',
 
     description="Proton Radiography File Format Tools for HEDP",
     long_description=long_description,
