@@ -15,7 +15,7 @@ run_number = h5readatt(h5filename, '/', 'run_number');
 assert(isa(fld, 'SimpleFields'));
 
 disp(fld.pradformat_version)
-disp(mean(fld.Ex, 'all'))
-disp(mean(nele, 'all'))
-disp(mean(nion, 'all'))
+disp(mean(fld.Ex(:)))
+disp(mean(nele(:)))
+disp(mean(nion(:)))
 disp(run_number)

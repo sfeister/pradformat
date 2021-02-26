@@ -34,7 +34,7 @@ assert(isa(plist, 'ParticlesList'));
 
 % Dealing with required attributes/datasets
 disp(plist.pradformat_version)
-disp(mean(plist.px, 'all'))
+disp(mean(plist.px(:)))
 
 % Dealing with optional attributes/datasets
 if ~isempty(plist.label)

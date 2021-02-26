@@ -47,7 +47,7 @@ assert(isa(rad, 'AdvancedRadiograph'));
 
 % Dealing with required attributes/datasets
 disp(rad.pradformat_version)
-disp(mean(rad.image, 'all'))
+disp(mean(rad.image(:)))
 
 % Dealing with optional attributes/datasets
 if ~isempty(rad.label)

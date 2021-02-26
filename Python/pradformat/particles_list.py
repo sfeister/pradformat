@@ -9,6 +9,7 @@ Created by Scott Feister on Feb 15 2021
 import h5py
 import numpy as np
 from datetime import datetime
+from ._h5sanitize import _h5sanitize
 from .__version__ import __version__
 
 PRADFORMAT_VERSION = __version__ # awkward work-around to get __version__ variable into class
@@ -131,7 +132,7 @@ class ParticlesList(object):
                         if not np.isscalar(data):
                             f.create_dataset(ds, data=data, compression="gzip", compression_opts=compression_opts) # Compress only for datasets of length greater than one
                         else:
-                            f.create_dataset(ds, data=data)                       
+                            f.create_dataset(ds, data=data)         
                 
             # Write required attributes to file
             for att in self.__req_atts:
@@ -157,12 +158,12 @@ class ParticlesList(object):
             # Read in required attributes
             for att in self.__req_atts:
                 if att not in ["object_type", "particles_type"]:
-                    setattr(self, att, f.attrs[att])
+                    setattr(self, att, _h5sanitize(f.attrs[att]))
                 
             # Read in optional attributes
             for att in self.__opt_atts:
                 if att in f.attrs.keys(): 
-                    setattr(self, att, f.attrs[att])
+                    setattr(self, att, _h5sanitize(f.attrs[att]))
 
 if __name__ == "__main__":
     pass

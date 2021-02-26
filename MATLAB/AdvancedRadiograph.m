@@ -67,13 +67,13 @@ classdef AdvancedRadiograph < matlab.mixin.SetGetExactNames & matlab.mixin.Custo
             % If some are not, throw an error.
             for i=1:length(obj.req_ds)
                 ds = obj.req_ds(i);
-                if isempty(get(obj, ds))
+                if isempty(get(obj, char(ds)))
                     error(['Please assign a value to all required properties.' newline 'The following required dataset property is not yet assigned: "' char(ds) '".' newline 'Assign a value via "object.' char(ds) ' = value" and try again.'])
                 end
             end           
             for i=1:length(obj.req_atts)
                 att = obj.req_atts(i);
-                if isempty(get(obj, att))
+                if isempty(get(obj, char(att)))
                     error(['Please assign a value to all required properties.' newline 'The following required attribute property is not yet assigned: "' char(att) '". ' newline 'Assign a value via "object.' char(att) ' = value" and try again.'])
                 end
             end
@@ -84,9 +84,9 @@ classdef AdvancedRadiograph < matlab.mixin.SetGetExactNames & matlab.mixin.Custo
             % Constructor method - load object from file
             if nargin == 1
                 % Load in the prad object from h5filename
-                load_prad_group(obj, h5filename, "/")
+                load_prad_group(obj, h5filename, '/')
                 for i=1:100000
-                    h5root = sprintf("/sensitivity%d", i);
+                    h5root = sprintf('/sensitivity%d', i);
                     try
                         h5info(h5filename, h5root) % will return error if h5root location does not exist
                     catch
@@ -102,17 +102,17 @@ classdef AdvancedRadiograph < matlab.mixin.SetGetExactNames & matlab.mixin.Custo
             obj.validate();
             
             % Delete any existing file
-            if isfile(h5filename)
+            if (exist(h5filename, 'file') == 2)
                 delete(h5filename);
-                if isfile(h5filename)
+                if (exist(h5filename, 'file') == 2)
                     error(['The existing HDF5 file: "' h5filename '" could not be overwritten.' newline 'Perhaps you do not have permissions to delete this file.' newline 'For example, perhaps the file is open and being read by another program, like HDFView? If so, close the file in that program.' newline 'Or, perhaps this file handle is currently open in MATLAB? Try the command fclose(''all'') to close all current file handles.' newline 'If all else fails, try manually deleting the file in question, or change your desired output filename to something else.' newline 'Once you''re done troubleshooting, run your script again.']);
                 end
             end
             
             % Create new file and save object into it
-            save_prad_group(obj, h5filename, "/")
+            save_prad_group(obj, h5filename, '/')
             for i=1:numel(obj.sensitivities)
-                h5root = sprintf("/sensitivity%d", i);
+                h5root = sprintf('/sensitivity%d', i);
                 save_prad_group(obj.sensitivities{i}, h5filename, h5root)
             end
         end

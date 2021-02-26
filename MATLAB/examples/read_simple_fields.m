@@ -33,7 +33,7 @@ assert(isa(fld, 'SimpleFields'));
 
 % Dealing with required attributes/datasets
 disp(fld.pradformat_version)
-disp(mean(fld.Ex, 'all'))
+disp(mean(fld.Ex(:)))
 
 % Dealing with optional attributes/datasets
 if ~isempty(fld.label)

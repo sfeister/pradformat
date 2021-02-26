@@ -40,13 +40,13 @@ classdef Sensitivity < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDispla
             % Validate that all required properties have been set.
             % If some are not, throw an error.
             for i=1:length(obj.req_ds)
-                ds = obj.req_ds(i);
+                ds = char(obj.req_ds(i));
                 if isempty(get(obj, ds))
                     error(['Please assign a value to all required properties.' newline 'The following required dataset property is not yet assigned: "' char(ds) '".' newline 'Assign a value via "object.' char(ds) ' = value" and try again.'])
                 end
             end           
             for i=1:length(obj.req_atts)
-                att = obj.req_atts(i);
+                att = char(obj.req_atts(i));
                 if isempty(get(obj, att))
                     error(['Please assign a value to all required properties.' newline 'The following required attribute property is not yet assigned: "' char(att) '". ' newline 'Assign a value via "object.' char(att) ' = value" and try again.'])
                 end

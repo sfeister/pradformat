@@ -9,6 +9,7 @@ Created by Scott Feister on Tue Feb  2 20:33:42 2021
 import h5py
 import numpy as np
 from datetime import datetime
+from ._h5sanitize import _h5sanitize
 from .__version__ import __version__
 
 PRADFORMAT_VERSION = __version__ # awkward work-around to get __version__ variable into class
@@ -132,12 +133,12 @@ class Sensitivity(object):
         # Read in required attributes
         for att in self.__req_atts:
             if att not in ["group_type"]:
-                setattr(self, att, f.attrs[att])
+                setattr(self, att, _h5sanitize(f.attrs[att]))
             
         # Read in optional attributes
         for att in self.__opt_atts:
             if att in f.attrs.keys(): 
-                setattr(self, att, f.attrs[att])
+                setattr(self, att, _h5sanitize(f.attrs[att]))
 
 class AdvancedRadiograph(object):
     """
@@ -293,12 +294,12 @@ class AdvancedRadiograph(object):
             # Read in required attributes
             for att in self.__req_atts:
                 if att not in ["object_type", "radiograph_type"]:
-                    setattr(self, att, f.attrs[att])
+                    setattr(self, att, _h5sanitize(f.attrs[att]))
                 
             # Read in optional attributes
             for att in self.__opt_atts:
                 if att in f.attrs.keys(): 
-                    setattr(self, att, f.attrs[att])
+                    setattr(self, att, _h5sanitize(f.attrs[att]))
             
             # Count the number of sensitivity groups (starting at 1 and counting up)
             i = 0

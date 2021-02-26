@@ -19,5 +19,5 @@ function [chunksize] = autochunksize(data)
             return
         end
     end
-    error("Error. \nFailed to find a good chunksize for this dataset.")
+    error(['Error.' newline 'Failed to find a good chunksize for this dataset.'])
 end

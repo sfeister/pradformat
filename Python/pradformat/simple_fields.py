@@ -9,6 +9,7 @@ Created by Scott Feister on Wed Feb  3 16:46:49 2021
 import h5py
 import numpy as np
 from datetime import datetime
+from ._h5sanitize import _h5sanitize
 from .__version__ import __version__
 
 PRADFORMAT_VERSION = __version__ # awkward work-around to get __version__ variable into class
@@ -147,12 +148,12 @@ class SimpleFields(object):
             # Read in required attributes
             for att in self.__req_atts:
                 if att not in ["object_type", "fields_type"]:
-                    setattr(self, att, f.attrs[att])
+                    setattr(self, att, _h5sanitize(f.attrs[att]))
                 
             # Read in optional attributes
             for att in self.__opt_atts:
                 if att in f.attrs.keys(): 
-                    setattr(self, att, f.attrs[att])
+                    setattr(self, att, _h5sanitize(f.attrs[att]))
 
 if __name__ == "__main__":
     pass

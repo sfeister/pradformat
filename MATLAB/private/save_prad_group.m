@@ -13,7 +13,7 @@ function [] = save_prad_group(obj, h5filename, h5root)
     % Write required datasets to file % TODO: Force a certain array
     % size
     for i=1:length(obj.req_ds)
-        ds = obj.req_ds(i);
+        ds = char(obj.req_ds(i));
         data = get(obj, ds);
         if isempty(data)
             delete(h5filename); % delete this incomplete file
@@ -37,7 +37,7 @@ function [] = save_prad_group(obj, h5filename, h5root)
 
     % Write optional datasets to file
     for i=1:length(obj.opt_ds)
-        ds = obj.opt_ds(i);
+        ds = char(obj.opt_ds(i));
         data = get(obj, ds);
         if isempty(data)
             % do nothing
@@ -60,9 +60,13 @@ function [] = save_prad_group(obj, h5filename, h5root)
 
     % Write required attributes to file
     for i=1:length(obj.req_atts)
-        att = obj.req_atts(i);
-        if ~isempty(get(obj, att))
-            h5writeatt(h5filename, h5root, att, get(obj, att));
+        att = char(obj.req_atts(i));
+        data = get(obj, att);
+        if isa(data, 'string') && verLessThan('matlab', '9.7')
+            data = char(data); % Convert string attributes to character vectors instead to accommodate old version of MATLAB h5writeatt
+        end
+        if ~isempty(data)
+            h5writeatt(h5filename, h5root, att, data);
         else
             delete(h5filename); % delete this incomplete file
             error(['Required attribute is not set! This file will not meet pradformat specs. Unset attribute: ' char(att) '. Please set a value and retry saving this file.'])
@@ -71,9 +75,13 @@ function [] = save_prad_group(obj, h5filename, h5root)
 
     % Write optional attributes to file
     for i=1:length(obj.opt_atts)
-        att = obj.opt_atts(i);
-        if ~isempty(get(obj, att))
-            h5writeatt(h5filename, h5root, att, get(obj, att));
+        att = char(obj.opt_atts(i));
+        data = get(obj, att);
+        if isa(data, 'string') && verLessThan('matlab', '9.7')
+            data = char(data); % Convert string attributes to character vectors instead to accommodate old version of MATLAB h5writeatt
+        end
+        if ~isempty(data)
+            h5writeatt(h5filename, h5root, att, data); 
         end
     end
 end

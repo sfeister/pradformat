@@ -1,6 +1,6 @@
 function [version] = pradformat_version()
 %PRADFORMAT_VERSION Returns the installed version of pradformat
 %   
-version = "0.1.2";
+version = "0.1.3";
 end
 

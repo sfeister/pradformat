@@ -12,7 +12,7 @@ function [] = load_prad_group(obj, h5filename, h5root)
 
     % Read in required datasets
     for i=1:length(obj.req_ds)
-        ds = obj.req_ds(i);
+        ds = char(obj.req_ds(i));
         try
             data = h5read(h5filename, [h5root char(ds)]);
             set(obj, ds, data);
@@ -23,7 +23,7 @@ function [] = load_prad_group(obj, h5filename, h5root)
 
     % Read in optional datasets
     for i=1:length(obj.opt_ds)
-        ds = obj.opt_ds(i);
+        ds = char(obj.opt_ds(i));
         try
             data = h5read(h5filename, [h5root char(ds)]);
             set(obj, ds, data);
@@ -33,7 +33,7 @@ function [] = load_prad_group(obj, h5filename, h5root)
 
     % Read in required attributes
     for i=1:length(obj.req_atts)
-        att = obj.req_atts(i);
+        att = char(obj.req_atts(i));
         if ~any(strcmp(att, obj.const_atts)) % These are fixed, set by the class definition; don't try to set these.
             try
                 data = h5readatt(h5filename, h5root, att);
@@ -46,7 +46,7 @@ function [] = load_prad_group(obj, h5filename, h5root)
 
     % Read in optional attributes
     for i=1:length(obj.opt_atts)
-        att = obj.opt_atts(i);
+        att = char(obj.opt_atts(i));
         try
             data = h5readatt(h5filename, h5root, att);
             set(obj, att, data);
