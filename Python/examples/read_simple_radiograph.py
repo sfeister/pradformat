@@ -26,8 +26,9 @@ assert isinstance(rad, prf.SimpleRadiograph)
 # rad.scale_factor # required | Multiplier to convert pixel counts into particle counts | particles/pixel count
 # rad.pixel_width # required | Physical pixel width / bin width, for the first image axis | meters
 # rad.pixel_width_ax2 # optional | Physical pixel width / bin width, for the second image axis (not needed if using square pixels) | meters
-# rad.source_distance # optional | Approximate distance from the particle source to the plane of the radiograph | meters
-# rad.ROI_distance # optional | Approximate distance from the center of the imaged region of interest to the plane of the radiograph | meters
+# rad.source_object_dist # optional | Approximate distance from the particle source to the object plane (the E & M structures). Used to estimate image magnification. | meters
+# rad.object_image_dist # optional | Approximate distance from the object plane (the E & M structures) to the image plane (the radiograph). Used to estimate image magnification. | meters
+# rad.source_radius # optional | Approximate characteristic radius of the particle source (set as zero for a point source). Helpful in estimating image resolution. | meters
 # rad.spec_name # optional | Shortname for the particle species**
 # rad.spec_mass # optional | Particle mass | kg
 # rad.spec_charge # optional | Particle charge | Coulombs
@@ -54,5 +55,5 @@ else:
 #  * The convention of this format is that the image lies in the z=0 plane of the radiograph coordinate system, and that the z-axis will point towards the particle source. The image may be stored already cropped and rotated by any angle within the x-y radiograph coordinate system, which is why X and Y are specified as arrays rather than vectors.
 #
 #  ** For best compatibility, consider using the PlasmaPy particle symbol conventions. https://docs.plasmapy.org/en/stable/api/plasmapy.particles.particle_symbol.html
-#     For example, protons can be specified as just “p+”, and electrons by "e-". Any arbitrary isotope of Hydrogen can be specified “ H-I q+” where I is the mass number and q is the charge.
+#     For example, protons can be specified as just "p+", and electrons by "e-". Any arbitrary isotope of Hydrogen can be specified "H-I q+" where I is the mass number and q is the charge.
 #

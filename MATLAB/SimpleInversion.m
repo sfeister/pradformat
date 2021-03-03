@@ -1,69 +1,67 @@
-classdef SimpleRadiograph < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisplay
-    % Simple Radiograph class
+classdef SimpleInversion < matlab.mixin.SetGetExactNames & matlab.mixin.CustomDisplay
+    % Simple Inversion class
     properties (Constant)
-        object_type = "radiograph";
-        radiograph_type = "simple";
+        object_type = "inversion";
+        inversion_type = "simple";
     end
     properties
-        image(:,:) {mustBeNumeric}
-        X(:,:) {mustBeNumeric}
-        Y(:,:) {mustBeNumeric}
-        T(:,:) double
+        phi(:,:) {mustBeNumeric}
+        defl_ax1(:,:) {mustBeNumeric}
+        defl_ax2(:,:) {mustBeNumeric}
+        
         pradformat_version string = pradformat_version()
-        scale_factor double
-        pixel_width double
-        pixel_width_ax2 double
+        dr double
         source_object_dist double
         object_image_dist double
-        source_radius double
         spec_name string
         spec_mass double
         spec_charge double
         spec_energy double
+        dr_ax2 double
+        source_radius double
         label string
         description string
-        experiment_date string
         file_date string = datestr(datetime('now'), 'yyyy-mm-dd')
-        raw_data_filename string       
+        radiograph_filename string       
+        fields_filename string       
     end
     properties (Hidden)
         % Categorize the above public properties as required or optional
-        req_ds = ["image"]; % Required datasets
-        opt_ds = ["X", "Y", "T"]; % Optional datasets
+        req_ds = []; % Required datasets
+        opt_ds = ["phi", "defl_ax1", "defl_ax2"]; % Optional datasets
         req_atts = [...  % Required attributes
             "object_type", ...
-            "radiograph_type", ...
+            "inversion_type", ...
             "pradformat_version", ...
-            "scale_factor", ...
-            "pixel_width", ...
-            ];
-        opt_atts = [...  % Optional attributes
-            "pixel_width_ax2", ...
+            "dr", ...
             "source_object_dist", ...
             "object_image_dist", ...
-            "source_radius", ...
             "spec_name", ...
             "spec_mass", ...
             "spec_charge", ...
             "spec_energy", ...
+            ];
+        opt_atts = [...  % Optional attributes
+            "dr_ax2", ...
+            "source_radius", ...
             "label", ...
             "description", ...
-            "experiment_date", ...
             "file_date", ...
-            "raw_data_filename", ...
+            "radiograph_filename", ...
+            "fields_filename", ...
             ];
         % List for a second time any above properties that are constants
         % of the class (and are not to be overwritten when reading from file)
-        const_atts = ["object_type", "radiograph_type"]
+        const_atts = ["object_type", "inversion_type"]
     end
     methods (Access = protected)
        function propgrps = getPropertyGroups(obj)
           % Customized pretty printing of object
-          propgrp1 = matlab.mixin.util.PropertyGroup(cellstr(obj.req_ds), 'Datasets (Required)');
+          % propgrp1 = matlab.mixin.util.PropertyGroup(cellstr(obj.req_ds), 'Datasets (Required)');
           propgrp2 = matlab.mixin.util.PropertyGroup(cellstr(obj.opt_ds), 'Datasets (Optional)');
           propgrp3 = matlab.mixin.util.PropertyGroup(cellstr(obj.req_atts), 'Attributes (Required)');
           propgrp4 = matlab.mixin.util.PropertyGroup(cellstr(obj.opt_atts), 'Attributes (Optional)');
-          propgrps = [propgrp1 propgrp2 propgrp3 propgrp4];
+          propgrps = [propgrp2 propgrp3 propgrp4];
        end
        function validate(obj)
             % Validate that all required properties have been set.
@@ -83,7 +81,7 @@ classdef SimpleRadiograph < matlab.mixin.SetGetExactNames & matlab.mixin.CustomD
        end
     end
     methods
-        function obj = SimpleRadiograph(h5filename)
+        function obj = SimpleInversion(h5filename)
             % Constructor method - load object from file
             if nargin == 1
                 % Load in the prad object from h5filename

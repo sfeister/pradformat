@@ -158,8 +158,9 @@ class AdvancedRadiograph(object):
         ]
     __opt_atts = [  # Optional attributes
         "pixel_width_ax2", 
-        "source_distance", 
-        "ROI_distance", 
+        "source_object_dist", 
+        "object_image_dist", 
+        "source_radius", 
         "label", 
         "description", 
         "experiment_date", 
@@ -176,8 +177,9 @@ class AdvancedRadiograph(object):
         self.pradformat_version = PRADFORMAT_VERSION
         self.pixel_width = None
         self.pixel_width_ax2 = None
-        self.source_distance = None
-        self.ROI_distance = None
+        self.source_object_dist = None
+        self.object_image_dist = None
+        self.source_radius = None
         self.label = None
         self.description = None
         self.experiment_date = None

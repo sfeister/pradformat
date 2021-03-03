@@ -18,8 +18,9 @@ rad.image = zeros(M, N); % required | Radiograph image (cropped and rotated, if 
 
 rad.pixel_width = 100.0e-6; % required | Physical pixel width / bin width, for the first image axis | meters
 % rad.pixel_width_ax2 = 25.0e-6; % optional | Physical pixel width / bin width, for the second image axis (not needed if using square pixels) | meters
-rad.source_distance = 1.53; % optional | Approximate distance from the particle source to the plane of the radiograph | meters
-rad.ROI_distance = 1.45; % optional | Approximate distance from the center of the imaged region of interest to the plane of the radiograph | meters
+rad.source_object_dist = 0.11; % optional | Approximate distance from the particle source to the object plane (the E & M structures). Used to estimate image magnification. | meters
+rad.object_image_dist = 1.45; % optional | Approximate distance from the object plane (the E & M structures) to the image plane (the radiograph). Used to estimate image magnification. | meters
+rad.source_radius = 3.0e-6; % optional | Approximate characteristic radius of the particle source (set as zero for a point source). Helpful in estimating image resolution. | meters
 
 rad.label = "MarchDISC_RCF_layer3"; % optional | Short, identifying label for this file (with no spaces or crazy characters). This can be stamped onto plots, etc.
 rad.description = "Layer 3 of the RCF stack on shot number 2 at OMEGA 2021 DISC. This layer is primarily sensitive to 25 MeV protons"; % optional | Longer description of this file. This can be read by people trying to figure out where this file came from.

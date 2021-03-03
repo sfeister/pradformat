@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-simple_radiograph.py: Read and write the HDF5 pradformat "Simple Radiograph" file structure
+simple_inversion.py: Read and write the HDF5 pradformat "Simple Inversion" file structure
 
-Created by Scott Feister on Tue Feb  2 20:33:42 2021
+Created by Scott Feister on Mar 2 2021
 """
 
 import h5py
@@ -14,67 +14,64 @@ from .__version__ import __version__
 
 PRADFORMAT_VERSION = __version__ # awkward work-around to get __version__ variable into class
 
-class SimpleRadiograph(object):
+class SimpleInversion(object):
     """
-    Object for storing data and attributes of a single radiograph created by single species at a single energy.
+    Object for storing data and attributes of an inverted SimpleRadiograph.
     """
-    object_type = "radiograph"
-    radiograph_type = "simple"
+    object_type = "inversion"
+    inversion_type = "simple"
 
     # Categorize the above/below public properties as required or optional
-    __req_ds = ["image"] # Required datasets
-    __opt_ds = ["X", "Y", "T"] # Optional datasets
+    __req_ds = [] # Required datasets
+    __opt_ds = ["phi", "defl_ax1", "defl_ax2"] # Optional datasets
     __req_atts = [  # Required attributes
         "object_type", 
-        "radiograph_type", 
+        "inversion_type", 
         "pradformat_version", 
-        "scale_factor", 
-        "pixel_width", 
-        ]
-    __opt_atts = [  # Optional attributes
-        "pixel_width_ax2", 
+        "dr", 
         "source_object_dist", 
         "object_image_dist", 
-        "source_radius", 
         "spec_name", 
         "spec_mass", 
         "spec_charge", 
         "spec_energy", 
+        ]
+    __opt_atts = [  # Optional attributes
+        "dr_ax2", 
+        "source_radius", 
         "label", 
         "description", 
-        "experiment_date", 
         "file_date", 
-        "raw_data_filename", 
+        "radiograph_filename", 
+        "fields_filename", 
         ]
 
     def __init__(self, h5filename=None):
-        self.image = None
-        self.X = None
-        self.Y = None
-        self.T = None
+        self.phi = None
+        self.defl_ax1 = None
+        self.defl_ax2 = None
         
         self.pradformat_version = PRADFORMAT_VERSION
-        self.scale_factor = None
-        self.pixel_width = None
-        self.pixel_width_ax2 = None
+        self.dr = None
         self.source_object_dist = None
         self.object_image_dist = None
-        self.source_radius = None
         self.spec_name = None
         self.spec_mass = None
         self.spec_charge = None
         self.spec_energy = None
+        self.dr_ax2 = None
+        self.source_radius = None
         self.label = None
         self.description = None
-        self.experiment_date = None
         self.file_date = datetime.now().strftime("%Y-%m-%d")
-        self.raw_data_filename = None
+        self.radiograph_filename = None
+        self.fields_filename = None
         
         if not isinstance(h5filename, type(None)):
             self.load(h5filename)
 
     def __str__(self):
-        mystr = "Simple Radiograph Object\n\n"
+        mystr = "Simple Inversion Object\n\n"
         mystr += "Required datasets: \n"
         for ds in self.__req_ds:
             data = getattr(self, ds)
@@ -117,7 +114,7 @@ class SimpleRadiograph(object):
         return
 
     def save(self, filename, compression_opts=4):
-        """ Saves SimpleRadiograph object to HDF5 file"""
+        """ Saves SimpleInversion object to HDF5 file"""
         self.validate() # Before opening a new HDF5 file, check that all required properties are set
         
         # Create file, overwriting if file already exists
@@ -162,7 +159,7 @@ class SimpleRadiograph(object):
                 
             # Read in required attributes
             for att in self.__req_atts:
-                if att not in ["object_type", "radiograph_type"]:
+                if att not in ["object_type", "inversion_type"]:
                     setattr(self, att, _h5sanitize(f.attrs[att]))
                 
             # Read in optional attributes

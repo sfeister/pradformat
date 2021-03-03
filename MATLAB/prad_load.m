@@ -71,6 +71,18 @@ function obj = prad_load(h5filename)
                 otherwise
                     error(['Error.' newline '"' char(particles_type) '" is not a recognized "particles_type" from within this HDF5 file. See pradformat format specifications for details.']);
             end
+        case 'inversion'
+            try
+                fields_type = h5readatt(h5filename, '/', 'inversion_type');
+            catch
+                error(['Error.' newline 'Failure to read the required "inversion_type" attribute from within this HDF5 file. See pradformat format specifications for details.']);
+            end
+            switch char(fields_type)
+                case 'simple'
+                    obj = SimpleInversion(h5filename);
+                otherwise
+                    error(['Error.' newline '"' char(fields_type) '" is not a recognized "inversion_type" from within this HDF5 file. See pradformat format specifications for details.']);
+            end
         otherwise
             error(['Error.' newline '"' char(object_type) ' is the "object_type" read from within this HDF5 file, but that is not a supported "object_type". See pradformat format specifications for details.']);
     end
