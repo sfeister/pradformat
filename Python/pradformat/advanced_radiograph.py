@@ -28,7 +28,7 @@ class Sensitivity(object):
         ]
     __opt_atts = []  # Optional attributes
 
-    def __init__(self, h5group=None):
+    def __init__(self, h5group=None, template=None):
         # h5group is an open handle to an already-created HDF5 group
         self.energies = None
         self.scale_factors = None
@@ -37,6 +37,16 @@ class Sensitivity(object):
         self.spec_name = None
         self.spec_mass = None
         self.spec_charge = None
+
+        if not isinstance(template, type(None)):
+            # Set any matching properties in the template object to properties in this object
+            all_props = set(self.__req_ds) | set(self.__opt_ds) | set(self.__req_atts) | set(self.__opt_atts) # all properties
+            sticky_props = set(["group_type"]) # Don't change any of these properties to match the template object values
+            for prop in (all_props - sticky_props):
+                try:
+                    setattr(self, prop, getattr(template, prop))
+                except:
+                    pass
 
         if not isinstance(h5group, type(None)):
             self.load(h5group)
@@ -168,7 +178,7 @@ class AdvancedRadiograph(object):
         "raw_data_filename", 
         ]
 
-    def __init__(self, h5filename=None):
+    def __init__(self, h5filename=None, template=None):
         self.image = None
         self.X = None
         self.Y = None
@@ -188,7 +198,18 @@ class AdvancedRadiograph(object):
         
         self.sensitivities = [] # List of sensitivity objects
 
+        if not isinstance(template, type(None)):
+            # Set any matching properties in the template object to properties in this object
+            all_props = set(self.__req_ds) | set(self.__opt_ds) | set(self.__req_atts) | set(self.__opt_atts) # all properties
+            sticky_props = set(["radiograph_type", "object_type", "pradformat_version", "file_date"]) # Don't change any of these properties to match the template object values
+            for prop in (all_props - sticky_props):
+                try:
+                    setattr(self, prop, getattr(template, prop))
+                except:
+                    pass
+        
         if not isinstance(h5filename, type(None)):
+            # Load in all properties present in the HDF5 file
             self.load(h5filename)
 
     def __str__(self):

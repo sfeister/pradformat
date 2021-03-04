@@ -46,7 +46,7 @@ class SimpleInversion(object):
         "fields_filename", 
         ]
 
-    def __init__(self, h5filename=None):
+    def __init__(self, h5filename=None, template=None):
         self.phi = None
         self.defl_ax1 = None
         self.defl_ax2 = None
@@ -67,7 +67,18 @@ class SimpleInversion(object):
         self.radiograph_filename = None
         self.fields_filename = None
         
+        if not isinstance(template, type(None)):
+            # Set any matching properties in the template object to properties in this object
+            all_props = set(self.__req_ds) | set(self.__opt_ds) | set(self.__req_atts) | set(self.__opt_atts) # all properties
+            sticky_props = set(["inversion_type", "object_type", "pradformat_version", "file_date"]) # Don't change any of these properties to match the template object values
+            for prop in (all_props - sticky_props):
+                try:
+                    setattr(self, prop, getattr(template, prop))
+                except:
+                    pass
+        
         if not isinstance(h5filename, type(None)):
+            # Load in all properties present in the HDF5 file
             self.load(h5filename)
 
     def __str__(self):
