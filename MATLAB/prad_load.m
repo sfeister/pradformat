@@ -20,7 +20,7 @@ function obj = prad_load(h5filename)
     
     try
         if verparse(file_pradformat_version) > verparse(pradformat_version())
-            warning(['Your MATLAB pradformat toolbox is out of date. The file you are about to load was generated with version ' char(file_pradformat_version) ', but your toolbox version is only ' char(pradformat_version()) '. For best compatibility, download the latest pradformat toolbox by visiting "https://github.com/phyzicist/pradformat".']);
+            warning(['Your MATLAB pradformat toolbox is out of date. The file you are about to load was generated with version ' char(file_pradformat_version) ', but your toolbox version is only ' char(pradformat_version()) '. For best compatibility, download the latest pradformat toolbox by visiting "https://github.com/sfeister/pradformat".']);
         end
     catch
         warning('Failed to identify whether your pradformat toolbox version is up-to-date with the file format version you''re reading. Proceed with caution!');

@@ -40,17 +40,17 @@ After installing the required packages, we may install **pradformat**.
 
 One way to install **pradformat** is via
 ```bash
-pip install "git+https://github.com/phyzicist/pradformat.git#egg=pkg&subdirectory=Python"
+pip install "git+https://github.com/sfeister/pradformat.git#egg=pkg&subdirectory=Python"
 ```
 
 To update **pradformat** at a later date
 ```bash
-pip install --upgrade "git+https://github.com/phyzicist/pradformat.git#egg=pkg&subdirectory=Python"
+pip install --upgrade "git+https://github.com/sfeister/pradformat.git#egg=pkg&subdirectory=Python"
 ```
 
 An alternative way to install **pradformat** is via
 ```bash
-git clone https://github.com/phyzicist/pradformat.git
+git clone https://github.com/sfeister/pradformat.git
 cd pradformat/Python
 python setup.py install
 ```

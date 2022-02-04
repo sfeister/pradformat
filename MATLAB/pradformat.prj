@@ -7,7 +7,7 @@
     <param.summary>Particle Radiography File Formats for High Energy Density Physics.</param.summary>
     <param.description>Visit https://scott.cikeys.com/prad/ for documentation on getting started.
 
-See https://github.com/phyzicist/pradformat for up-to-date toolbox downloads.</param.description>
+See https://github.com/sfeister/pradformat for up-to-date toolbox downloads.</param.description>
     <param.screenshot>C:\Users\scott\Documents\SourceTree\pradformat\icon\icon_wikimedia_ferris_wheel.jpg</param.screenshot>
     <param.version>0.2.1</param.version>
     <param.output>${PROJECT_ROOT}\pradformat.mltbx</param.output>
